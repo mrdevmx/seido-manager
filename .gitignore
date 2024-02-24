@@ -57,5 +57,6 @@ Thumbs.db
 #composer
 composer.phar
 /vendor/
+/src/vendor
 composer.lock
 
