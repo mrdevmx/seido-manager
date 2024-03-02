@@ -1,9 +1,13 @@
+<?php
+date_default_timezone_set('America/Mexico_City');
+setlocale(LC_ALL,"es_ES");
+?>
 <!--**********************************
             Nav header start
         ***********************************-->
         <div class="nav-header">
             <a href="./" class="brand-logo">
-                <img id="pc-logo" class="logo-abbr" src="<?php echo $pathTheme;?>images/siscontrol_logo.svg" alt="">
+                <img id="pc-logo" class="logo-abbr" src="<?php echo $pathTheme;?>images/svg_logo_arctec.svg" alt="">
 				<img id="movil-logo" class="logo-abbr" src="<?php echo $pathTheme;?>images/siscontrol_simple_logo.svg" alt="">
                 <!--<img class="logo-compact" src="./images/simple_logo.jpg" alt="">
                 <img class="brand-title" src="./images/simple_logo.jpg" alt="">-->
@@ -139,7 +143,7 @@
 									<li class="dz-chat-user">
 										<div class="d-flex bd-highlight">
 											<div class="img_cont">
-												<img src="images/avatar/3.jpg" class="rounded-circle user_img" alt=""/>
+												<img src="<?php echo $pathTheme;?>images/avatar/3.jpg" class="rounded-circle user_img" alt=""/>
 												<span class="online_icon"></span>
 											</div>
 											<div class="user_info">
@@ -151,7 +155,7 @@
 									<li class="dz-chat-user">
 										<div class="d-flex bd-highlight">
 											<div class="img_cont">
-												<img src="images/avatar/4.jpg" class="rounded-circle user_img" alt=""/>
+												<img src="<?php echo $pathTheme;?>images/avatar/4.jpg" class="rounded-circle user_img" alt=""/>
 												<span class="online_icon offline"></span>
 											</div>
 											<div class="user_info">
@@ -164,7 +168,7 @@
 									<li class="dz-chat-user">
 										<div class="d-flex bd-highlight">
 											<div class="img_cont">
-												<img src="images/avatar/5.jpg" class="rounded-circle user_img" alt=""/>
+												<img src="<?php echo $pathTheme;?>images/avatar/5.jpg" class="rounded-circle user_img" alt=""/>
 												<span class="online_icon offline"></span>
 											</div>
 											<div class="user_info">
@@ -176,7 +180,7 @@
 									<li class="dz-chat-user">
 										<div class="d-flex bd-highlight">
 											<div class="img_cont">
-												<img src="images/avatar/1.jpg" class="rounded-circle user_img" alt=""/>
+												<img src="<?php echo $pathTheme;?>images/avatar/1.jpg" class="rounded-circle user_img" alt=""/>
 												<span class="online_icon"></span>
 											</div>
 											<div class="user_info">
@@ -188,7 +192,7 @@
 									<li class="dz-chat-user">
 										<div class="d-flex bd-highlight">
 											<div class="img_cont">
-												<img src="images/avatar/2.jpg" class="rounded-circle user_img" alt=""/>
+												<img src="<?php echo $pathTheme;?>images/avatar/2.jpg" class="rounded-circle user_img" alt=""/>
 												<span class="online_icon offline"></span>
 											</div>
 											<div class="user_info">
@@ -200,7 +204,7 @@
 									<li class="dz-chat-user">
 										<div class="d-flex bd-highlight">
 											<div class="img_cont">
-												<img src="images/avatar/3.jpg" class="rounded-circle user_img" alt=""/>
+												<img src="<?php echo $pathTheme;?>images/avatar/3.jpg" class="rounded-circle user_img" alt=""/>
 												<span class="online_icon"></span>
 											</div>
 											<div class="user_info">
@@ -213,7 +217,7 @@
 									<li class="dz-chat-user">
 										<div class="d-flex bd-highlight">
 											<div class="img_cont">
-												<img src="images/avatar/4.jpg" class="rounded-circle user_img" alt=""/>
+												<img src="<?php echo $pathTheme;?>images/avatar/4.jpg" class="rounded-circle user_img" alt=""/>
 												<span class="online_icon offline"></span>
 											</div>
 											<div class="user_info">
@@ -225,7 +229,7 @@
 									<li class="dz-chat-user">
 										<div class="d-flex bd-highlight">
 											<div class="img_cont">
-												<img src="images/avatar/5.jpg" class="rounded-circle user_img" alt=""/>
+												<img src="<?php echo $pathTheme;?>images/avatar/5.jpg" class="rounded-circle user_img" alt=""/>
 												<span class="online_icon offline"></span>
 											</div>
 											<div class="user_info">
@@ -259,7 +263,7 @@
 							<div class="card-body msg_card_body dz-scroll" id="DZ_W_Contacts_Body3">
 								<div class="d-flex justify-content-start mb-4">
 									<div class="img_cont_msg">
-										<img src="images/avatar/1.jpg" class="rounded-circle user_img_msg" alt=""/>
+										<img src="<?php echo $pathTheme;?>images/avatar/1.jpg" class="rounded-circle user_img_msg" alt=""/>
 									</div>
 									<div class="msg_cotainer">
 										Hi, how are you samim?
@@ -272,12 +276,12 @@
 										<span class="msg_time_send">8:55 AM, Today</span>
 									</div>
 									<div class="img_cont_msg">
-								<img src="images/avatar/2.jpg" class="rounded-circle user_img_msg" alt=""/>
+								<img src="<?php echo $pathTheme;?>images/avatar/2.jpg" class="rounded-circle user_img_msg" alt=""/>
 									</div>
 								</div>
 								<div class="d-flex justify-content-start mb-4">
 									<div class="img_cont_msg">
-										<img src="images/avatar/1.jpg" class="rounded-circle user_img_msg" alt=""/>
+										<img src="<?php echo $pathTheme;?>images/avatar/1.jpg" class="rounded-circle user_img_msg" alt=""/>
 									</div>
 									<div class="msg_cotainer">
 										I am good too, thank you for your chat template
@@ -290,12 +294,12 @@
 										<span class="msg_time_send">9:05 AM, Today</span>
 									</div>
 									<div class="img_cont_msg">
-								<img src="images/avatar/2.jpg" class="rounded-circle user_img_msg" alt=""/>
+								<img src="<?php echo $pathTheme;?>images/avatar/2.jpg" class="rounded-circle user_img_msg" alt=""/>
 									</div>
 								</div>
 								<div class="d-flex justify-content-start mb-4">
 									<div class="img_cont_msg">
-										<img src="images/avatar/1.jpg" class="rounded-circle user_img_msg" alt=""/>
+										<img src="<?php echo $pathTheme;?>images/avatar/1.jpg" class="rounded-circle user_img_msg" alt=""/>
 									</div>
 									<div class="msg_cotainer">
 										I am looking for your next templates
@@ -308,12 +312,12 @@
 										<span class="msg_time_send">9:10 AM, Today</span>
 									</div>
 									<div class="img_cont_msg">
-										<img src="images/avatar/2.jpg" class="rounded-circle user_img_msg" alt=""/>
+										<img src="<?php echo $pathTheme;?>images/avatar/2.jpg" class="rounded-circle user_img_msg" alt=""/>
 									</div>
 								</div>
 								<div class="d-flex justify-content-start mb-4">
 									<div class="img_cont_msg">
-										<img src="images/avatar/1.jpg" class="rounded-circle user_img_msg" alt=""/>
+										<img src="<?php echo $pathTheme;?>images/avatar/1.jpg" class="rounded-circle user_img_msg" alt=""/>
 									</div>
 									<div class="msg_cotainer">
 										Bye, see you
@@ -322,7 +326,7 @@
 								</div>
 								<div class="d-flex justify-content-start mb-4">
 									<div class="img_cont_msg">
-										<img src="images/avatar/1.jpg" class="rounded-circle user_img_msg" alt=""/>
+										<img src="<?php echo $pathTheme;?>images/avatar/1.jpg" class="rounded-circle user_img_msg" alt=""/>
 									</div>
 									<div class="msg_cotainer">
 										Hi, how are you samim?
@@ -335,12 +339,12 @@
 										<span class="msg_time_send">8:55 AM, Today</span>
 									</div>
 									<div class="img_cont_msg">
-								<img src="images/avatar/2.jpg" class="rounded-circle user_img_msg" alt=""/>
+								<img src="<?php echo $pathTheme;?>images/avatar/2.jpg" class="rounded-circle user_img_msg" alt=""/>
 									</div>
 								</div>
 								<div class="d-flex justify-content-start mb-4">
 									<div class="img_cont_msg">
-										<img src="images/avatar/1.jpg" class="rounded-circle user_img_msg" alt=""/>
+										<img src="<?php echo $pathTheme;?>images/avatar/1.jpg" class="rounded-circle user_img_msg" alt=""/>
 									</div>
 									<div class="msg_cotainer">
 										I am good too, thank you for your chat template
@@ -353,12 +357,12 @@
 										<span class="msg_time_send">9:05 AM, Today</span>
 									</div>
 									<div class="img_cont_msg">
-								<img src="images/avatar/2.jpg" class="rounded-circle user_img_msg" alt=""/>
+								<img src="<?php echo $pathTheme;?>images/avatar/2.jpg" class="rounded-circle user_img_msg" alt=""/>
 									</div>
 								</div>
 								<div class="d-flex justify-content-start mb-4">
 									<div class="img_cont_msg">
-										<img src="images/avatar/1.jpg" class="rounded-circle user_img_msg" alt=""/>
+										<img src="<?php echo $pathTheme;?>images/avatar/1.jpg" class="rounded-circle user_img_msg" alt=""/>
 									</div>
 									<div class="msg_cotainer">
 										I am looking for your next templates
@@ -371,12 +375,12 @@
 										<span class="msg_time_send">9:10 AM, Today</span>
 									</div>
 									<div class="img_cont_msg">
-										<img src="images/avatar/2.jpg" class="rounded-circle user_img_msg" alt=""/>
+										<img src="<?php echo $pathTheme;?>images/avatar/2.jpg" class="rounded-circle user_img_msg" alt=""/>
 									</div>
 								</div>
 								<div class="d-flex justify-content-start mb-4">
 									<div class="img_cont_msg">
-										<img src="images/avatar/1.jpg" class="rounded-circle user_img_msg" alt=""/>
+										<img src="<?php echo $pathTheme;?>images/avatar/1.jpg" class="rounded-circle user_img_msg" alt=""/>
 									</div>
 									<div class="msg_cotainer">
 										Bye, see you
@@ -567,7 +571,7 @@
 											<li>
 												<div class="timeline-panel">
 													<div class="media mr-2">
-														<img alt="image" width="50" src="images/avatar/1.jpg">
+														<img alt="image" width="50" src="<?php echo $pathTheme;?>images/avatar/1.jpg">
 													</div>
 													<div class="media-body">
 														<h6 class="mb-1">Dr sultads Send you Photo</h6>
@@ -600,7 +604,7 @@
 											 <li>
 												<div class="timeline-panel">
 													<div class="media mr-2">
-														<img alt="image" width="50" src="images/avatar/1.jpg">
+														<img alt="image" width="50" src="<?php echo $pathTheme;?>images/avatar/1.jpg">
 													</div>
 													<div class="media-body">
 														<h6 class="mb-1">Dr sultads Send you Photo</h6>
@@ -640,7 +644,7 @@
 									<div class="header-info">
 										<span>Hola, <strong><?php //echo $shortname; ?></strong></span>
 									</div>
-                                    <img src="images/profile/profile.jpg" width="20" alt=""/>
+                                    <img src="<?php echo $pathTheme;?>images/profile/profile.jpg" width="20" alt=""/>
                                 </a>
                                 <div class="dropdown-menu dropdown-menu-right">
                                     <!--<a href="./app-profile.html" class="dropdown-item ai-icon">
