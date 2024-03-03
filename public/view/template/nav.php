@@ -29,6 +29,7 @@
 						</a>
                         <ul aria-expanded="false">
                             <li><a href="./usuarios">Catálogo Usuarios</a></li>
+                            <li><a href="./catarticulos">Catálogo Artículos</a></li>
                             <!--<li><a href="./polizaventas">Poliza Ventas</a></li>-->
                         </ul>
                     </li>

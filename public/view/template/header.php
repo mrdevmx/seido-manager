@@ -7,8 +7,8 @@ setlocale(LC_ALL,"es_ES");
         ***********************************-->
         <div class="nav-header">
             <a href="./" class="brand-logo">
-                <img id="pc-logo" class="logo-abbr" src="<?php echo $pathTheme;?>images/svg_logo_arctec.svg" alt="">
-				<img id="movil-logo" class="logo-abbr" src="<?php echo $pathTheme;?>images/siscontrol_simple_logo.svg" alt="">
+                <img id="pc-logo" class="logo-abbr" src="<?php echo $pathTheme;?>images/svg_logo_arctec.svg" alt="ARCTEC CONSTRUCCIONES">
+				<img id="movil-logo" class="logo-abbr" src="<?php echo $pathTheme;?>images/svg_isotipo_arctec.svg" alt="ARCTEC CONSTRUCCIONES">
                 <!--<img class="logo-compact" src="./images/simple_logo.jpg" alt="">
                 <img class="brand-title" src="./images/simple_logo.jpg" alt="">-->
             </a>
