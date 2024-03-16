@@ -35,9 +35,13 @@
                     </li>
                 </ul>
             
-				<div class="copyright">
-					<p class="text-center" style="padding: 0 !important; margin: 0 !important;"><strong>MR. DEV</strong></p>
-                    <p class="text-center" style="padding: 0 !important; margin: 0 !important">© <?php echo date("Y"); ?> All Rights Reserved</p>
+				<div class="container copyright text-center">
+                    <img src="./src/images/icono_mrdev_svg.svg" alt="MRDEV">
+					<p class="text-center" style="padding: 0 !important; margin: 0 !important; display: inline-flex">
+                        <strong>MR. DEV</strong></p>
+                    <p class="text-center" style="padding: 0 !important; margin: 0 !important">
+                        © <?php echo date("Y"); ?> All Rights Reserved
+                    </p>
 					
 				</div>
 			</div>

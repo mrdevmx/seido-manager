@@ -147,7 +147,8 @@
                                         <th>Descripción</th>
                                         <th>SKU</th>
                                         <th>Unidad</th>
-                                        <th>Alta</th>
+                                        <th>Precio</th>
+                                        <th>Proveedor</th>
                                         <th>Estatus</th>
                                         <th class="text-center">Acciones</th>
                                     </tr>
@@ -161,7 +162,8 @@
                                         <th>Descripción</th>
                                         <th>SKU</th>
                                         <th>Unidad</th>
-                                        <th>Alta</th>
+                                        <th>Precio</th>
+                                        <th>Proveedor</th>
                                         <th>Estatus</th>
                                         <th class="text-center">Acciones</th>
                                     </tr>

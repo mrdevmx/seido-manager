@@ -21,7 +21,18 @@ class articulosModel{
         $this->articulos=array();
     }
     public function getarticulos(){
-        $query=$this->db->query("select * from ".$this -> table);
+        $query=$this->db->query("select 
+                                     Cri_Id
+                                    ,Cri_SKU
+                                    ,Cri_Descrip
+                                    ,Cun_NomClav
+                                    ,Cpo_NomCome
+                                    ,concat('$', format(Cri_PreUnit, 2, 'en_US')) as Cri_PreUnit
+                                    ,convert(Cri_FecAlta, char(10)) as Cri_FecAlta
+                                    ,Cri_Estatus
+                                from ".$this -> table." 
+                                inner join ADCATUNI on Cun_Clave = Cri_Unidad
+                                inner join ADCATPRO on Cpo_Id = Cri_Proveed");
         if ($query->num_rows > 0) {
             while($row=$query->fetch_assoc()){
                 $this->articulos[]=$row;
@@ -56,9 +67,10 @@ class articulosModel{
                 <tr>
                     <td align="center">$i</td>
                     <td>{$articulo["Cri_Descrip"]}</td>
-                    <td align="center">{$articulo["Cri_SKU"]}</td>
-                    <td align="center">{$articulo["Cri_Unidad"]}</td>
-                    <td align="center">{$articulo["Cri_FecAlta"]}</td>
+                    <td>{$articulo["Cri_SKU"]}</td>
+                    <td>{$articulo["Cun_NomClav"]}</td>
+                    <td>{$articulo["Cri_PreUnit"]}</td>
+                    <td>{$articulo["Cpo_NomCome"]}</td>
                     <td>$estatus</td>
                     <td class="text-center">
                     <div class="dropdown ml-auto text-center">
