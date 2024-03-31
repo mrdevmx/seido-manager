@@ -7,13 +7,16 @@
   define('DB_DABA', 'DATMANTOOLS');  
 
   if (isset($_GET['phrase'])){
+    $provid = $_GET['provid'];
+    $prov = ($provid != '') ? 'AND Cpo_Id = '.$provid : '';
     $return_arr = array();
     try{
       $conn = new PDO("mysql:host=".DB_HOST.";dbname=".DB_DABA, DB_USER, DB_PASS);
       $conn->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
       
-      $stmt = $conn->prepare('SELECT 
+      $stmt = $conn->prepare("SELECT 
                                  Cri_Id
+                                ,Cpo_Id
                                 ,Cri_SKU
                                 ,Cri_Descrip
                                 ,Cun_NomClav
@@ -25,7 +28,8 @@
                             inner join ADCATUNI on Cun_Clave = Cri_Unidad
                             inner join ADCATPRO on Cpo_Id = Cri_Proveed 
                             WHERE Cri_Descrip LIKE :phrase 
-                            AND Cri_Estatus = 1');
+                            AND Cri_Estatus = 1
+                            ".$prov);
       $stmt->execute(array('phrase' => '%'.$_GET['phrase'].'%'));
       
       while($row = $stmt->fetch()) {

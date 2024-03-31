@@ -17,15 +17,21 @@
         $(document).on ("click", ".remove .remove_btn", function () {
             $(this).parent('.remove').remove();
         });
+        /*$(document).on("keypress", "#div_prov #prov", function (e) {
+          console.log(e);
+          console.log($(this));
+          //prov($(this));
+     });*/
+
     });
      $("#agregar").click(function(){
     var cont = $(".remove").length;
     var index = cont + 1;
     var add = '\n\
             <div class="remove form-row" id="'+index+'">\n\
-                 <div class="form-group col-md-6">\n\
+                 <div class="form-group col-md-6" id="producto">\n\
                      <label>Producto</label>\n\
-                     <input type="text" id="producto_'+index+'" name="producto[]" class="form-control" placeholder="">\n\
+                     <input type="text" id="producto_'+index+'" name="producto[]" class="producto form-control" placeholder="">\n\
                  </div>\n\
                  <div class="form-group col-md-2">\n\
                      <label>Unidad</label>\n\
@@ -40,9 +46,10 @@
     
     $("#frmregent").append(add);   
 
+    var provid = $("#provid").val();
     var product = {
       url: function(phrase) {
-        return "./view/almacen/autocompleteProduct.php?phrase=" + phrase + "&format=json";
+        return "./view/almacen/autocompleteProduct.php?phrase=" + phrase + "&provid=" +provid +"&format=json";
       },
       getValue: "producto",
       list: {
@@ -84,24 +91,43 @@
     $("#producto_"+index).easyAutocomplete(product);
   });
 
+
   var prov = {
     url: function(phrase) {
-    return "autocompleteProv.php?phrase=" + phrase + "&format=json";
+    return "./view/almacen/autocompleteProv.php?phrase=" + phrase + "&format=json";
     },
-    getValue: "proovedor",
+    getValue: "provname",
     list: {
-      onSelectItemEvent: function() {
-        var selectedItemValue = $("#cliente").getSelectedItemData().ruc;
-        $("#ruc").val(selectedItemValue).trigger("change");
+        maxNumberOfElements: 10000,
+        match: {
+                    enabled: false,
+                    caseSensitive: false,
+                    method: function(element, phrase) {
 
-        var selectCod = $("#cliente").getSelectedItemData().galeria;
-        $("#codGal").val(selectCod).trigger("change");
+                        if (element.search(phrase) > -1) {
+                            return true;
+                        } else {
+                            return false;
+                        }
+                    }
+                },
+        showAnimation: {
+                    type: "slide", //normal|slide|fade
+                    time: 400,
+                    callback: function() {}
+                },
 
-        var selectID = $("#cliente").getSelectedItemData().id;
-        $("#idcliente").val(selectID).trigger("change");
+                hideAnimation: {
+                    type: "slide",
+                    time: 400,
+                    callback: function() {}
+                },
+        onSelectItemEvent: function() {
+          var selectedItemValue = $("#provname").getSelectedItemData().provid;
+          $("#provid").val(selectedItemValue).trigger("change");
+        }
       }
-    }
   }
-  $('#cliente').easyAutocomplete(prov);
+  $("#provname").easyAutocomplete(prov);
 </script>
 </html>

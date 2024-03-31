@@ -50,7 +50,8 @@
                                                 <div class="form-row">
                                                     <div class="form-group col-md-6">
                                                         <label>Proveedor</label>
-                                                        <input type="text" id="prov" name="prov" class="producto form-control" placeholder="">
+                                                        <input type="text" id="provname" name="prov" class="form-control" placeholder="">
+                                                        <input type="text" id="provid" name="provid" class="form-control" placeholder="" style="display:none;">
                                                     </div>
                                                     <div class="form-group col-md-3">
                                                         <label>No. Requisición</label>

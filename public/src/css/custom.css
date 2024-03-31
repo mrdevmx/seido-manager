@@ -70,7 +70,9 @@
 .easy-autocomplete-container ul {
     -webkit-overflow-scrolling: touch !important;
 }*/
-
+.easy-autocomplete{
+    width: 100% !important;
+}
 
 ::-webkit-scrollbar {
     width: 10px;
