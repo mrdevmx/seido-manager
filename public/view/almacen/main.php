@@ -26,17 +26,17 @@
                             <button type="button" id="btnaddus" class="btn btn-sm btn-primary mb-2" data-toggle="modal"
                             data-target="#modalEntrada">Registrar Salida</button>
                         </div>
-                        <div class="modal fade" id="modalEntrada">
-                            <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+                        <div class="modal fade" id="modalEntrada"  data-backdrop="static">
+                            <div class="modal-dialog modal-lg modal-dialog" role="document" style="max-width: 90%;">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title"><label id="titleus">Nueva Entrada</label></h5>
+                                        <h5 class="modal-title"><label id="titleus">Registrar Entrada</label></h5>
                                         <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
                                         </button>
                                     </div>
                                     <div class="modal-body">
                                         <div class="basic-form">
-                                            <form id="frmuser" name="frmuser" method="post"
+                                            <form id="frmregent" name="frmregent" method="post"
                                                 enctype="multipart/form-data">
                                                 <div class="form-group row" style="display:none">
                                                     <label class="col-sm-4 col-form-label">Modo</label>
@@ -47,52 +47,26 @@
                                                             value="0">
                                                     </div>
                                                 </div>
-                                                <div class="form-group row">
-                                                    <label class="col-sm-4 col-form-label">Nombre</label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" id="nombre" name="nombre"
-                                                            class="form-control" placeholder="">
+                                                <div class="form-row">
+                                                    <div class="form-group col-md-6">
+                                                        <label>Proveedor</label>
+                                                        <input type="text" id="prov" name="prov" class="producto form-control" placeholder="">
                                                     </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label class="col-sm-4 col-form-label">Apellido</label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" id="apellido" name="apellido"
-                                                            class="form-control" placeholder="">
+                                                    <div class="form-group col-md-3">
+                                                        <label>No. Requisición</label>
+                                                        <input type="text" id="requi" name="requi" class="form-control">
                                                     </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label class="col-sm-4 col-form-label">Correo</label>
-                                                    <div class="col-sm-8 input-group">
-                                                        <input type="text" id="correo" name="correo"
-                                                            class="form-control" placeholder="">
-                                                        <div class="input-group-append">
-                                                            <span class="input-group-text">@dimasur.com.mx</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row" id="hiddencon">
-                                                    <label id="newpass"
-                                                        class="col-sm-4 col-form-label">Contraseña</label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" id="contrasena" name="contrasena"
-                                                            class="form-control" placeholder="">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label class="col-sm-4 col-form-label">Tipo Usuario</label>
-                                                    <div class="col-sm-8">
-                                                        <select id="tipous" name="tipous" class="form-control">
-                                                            <option value="selected">Seleccione</option>
-                                                            <option value="2">Administrador</option>
-                                                            <option value="3">Contador</option>
-                                                            <option value="4">Observador</option>
-                                                        </select>
+                                                    <div class="form-group col-md-3">
+                                                        <label>Factura</label>
+                                                        <input type="text" id="recibe" name="recibe" class="form-control">
                                                     </div>
                                                 </div>
                                             </form>
+                                            <div class="container-fluid">
+                                                <button type="button" class="btn btn-success btn-sm" id="agregar">Agregar Producto <span class="btn-icon-right"><i class="fa fa-plus"></i></span></button>
+                                            </div>
                                         </div>
-                                    </div>
+                                    </div> 
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-sm btn-danger light"
                                             data-dismiss="modal">Cerrar</button>

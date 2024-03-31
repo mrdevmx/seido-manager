@@ -11,3 +11,5 @@
 <link href="https://cdn.lineicons.com/2.0/LineIcons.css" rel="stylesheet">
 <link href="<?php echo $pathTheme;?>vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
 <link href="<?php echo $pathTheme;?>vendor/datatables/css/jquery.dataTables.min.css" rel="stylesheet">
+<link href="<?php echo $pathTheme;?>css/easy-autocomplete.min.css" rel="stylesheet">
+<link href="<?php echo $pathTheme;?>css/custom.css" rel="stylesheet">

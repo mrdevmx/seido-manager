@@ -26,6 +26,7 @@
 <!-- Datetable -->
 <script src="<?php echo $pathTheme;?>vendor/datatables/js/jquery.dataTables.min.js"></script>
 <script src="<?php echo $pathTheme;?>js/plugins-init/datatables.init.js"></script>
+<script src="<?php echo $pathTheme;?>js/jquery.easy-autocomplete.min.js"></script>
 
 <script>
     $('#logout').click(function(){
