@@ -1,0 +1,123 @@
+<?php
+/*
+****************************************************************************
+** DESCRIPCION: Modelo almacen					                        ****
+****************************************************************************
+** REFERENCIAS:                                                         ****
+****************************************************************************
+** Creó:       Jesus Alberto Martinez Rodriguez						    ****
+** Fecha:		03/Abril/2024											****
+****************************************************************************
+*/
+class almacenModel{
+    private $table = 'ALENTART';
+    private $db;
+    private $typeConnection = 2;
+    private $entradas;
+    private $salidas;
+    private $kardex;
+    private $tableView;
+ 
+    public function __construct(){
+        $this->db=Conectar::conexion($this->typeConnection);
+        $this->entradas=array();
+        $this->salidas=array();
+        $this->kardex=array();
+    }
+    /*public function getarticulos(){
+        $query=$this->db->query("select 
+                                     Cri_Id
+                                    ,Cri_SKU
+                                    ,Cri_Descrip
+                                    ,Cun_NomClav
+                                    ,Cpo_NomCome
+                                    ,concat('$', format(Cri_PreUnit, 2, 'en_US')) as Cri_PreUnit
+                                    ,convert(Cri_FecAlta, char(10)) as Cri_FecAlta
+                                    ,Cri_Estatus
+                                from ".$this -> table." 
+                                inner join ADCATUNI on Cun_Clave = Cri_Unidad
+                                inner join ADCATPRO on Cpo_Id = Cri_Proveed");
+        if ($query->num_rows > 0) {
+            while($row=$query->fetch_assoc()){
+                $this->articulos[]=$row;
+            }
+        }else{
+            return false;
+        }
+        $this->db->close();
+        return $this->articulos;
+    }
+
+    public function getArticuloById($id){
+		$query=$this->db->query("select * from ".$this->table." where Cri_Id = ".$id);
+        if ($query->num_rows > 0) {
+		    while($row=$query->fetch_assoc()){
+                $this->articulos[]=$row;
+            }
+        }else{
+            return false;
+        }
+
+		$this->db->close();
+        return $this->articulos;
+	}
+
+    public function getArticulosTable(){
+        $articulos=$this->getarticulos();
+        $i=1;
+        foreach($articulos as $articulo){
+            $estatus = ($articulo["Cri_Estatus"] == 1) ? '<span class="badge light badge-success"><i class="fa fa-circle text-success mr-1"></i>Activo</span>' : '<span class="badge light badge-danger"><i class="fa fa-circle text-danger mr-1"></i>Inactivo</span>';
+            $this->tableView.= <<< EOT
+                <tr>
+                    <td align="center">$i</td>
+                    <td>{$articulo["Cri_Descrip"]}</td>
+                    <td>{$articulo["Cri_SKU"]}</td>
+                    <td>{$articulo["Cun_NomClav"]}</td>
+                    <td>{$articulo["Cri_PreUnit"]}</td>
+                    <td>{$articulo["Cpo_NomCome"]}</td>
+                    <td>$estatus</td>
+                    <td class="text-center">
+                    <div class="dropdown ml-auto text-center">
+                        <div class="btn-link" data-toggle="dropdown">
+                            <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
+                        </div>
+                        <div class="dropdown-menu dropdown-menu-right">
+                            <a class="dropdown-item" onclick=" return cargardatos({$articulo["Cri_Estatus"]})" href="javascript:void()">Editar</a>
+                            <a class="dropdown-item" onclick=" return cargarid({$articulo["Cri_Estatus"]})" data-toggle="modal" data-target="#modalarticuloContrasenia" href="javascript:void()">Cambiar Contraseña</a>
+                        </div>
+                    </div>
+                    </td>
+                </tr>
+            EOT;
+            $i++;
+        }
+        return $this->tableView;
+    }*/
+
+    /* Save note */
+	public function guardaEntrada($provid,$requi,$recibe,$productos){
+		//$this->getConection();
+
+		/* Received values 
+		if(isset($param["title"])) $title = $param["title"];
+		if(isset($param["content"])) $content = $param["content"];
+
+
+		if($exists){
+			$sql = "UPDATE ".$this->table. " SET title=?, content=? WHERE id=?";
+			$stmt = $this->conection->prepare($sql);
+			$res = $stmt->execute([$title, $content, $id]);
+		}else{
+			$sql = "INSERT INTO ".$this->table. " (title, content) values(?, ?)";
+			$stmt = $this->conection->prepare($sql);
+			$stmt->execute([$title, $content]);
+			$id = $this->conection->lastInsertId();
+		}*/	
+
+        $response = 'Exito';
+
+		return $response;	
+
+	}
+}
+?>

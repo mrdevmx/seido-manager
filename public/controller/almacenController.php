@@ -1,10 +1,15 @@
 <?php
 //Llamada al modelo
-//require_once($path."model/almacenModel.php");
-//$usuarios = new usuariosModel();
+require_once($path."model/almacenModel.php");
+$almacen = new almacenModel();
 //$table=$usuarios->getUsuariosTable();
 
-
-//Llamada a la vista
+if(isset($_POST["provid"])){
+    $response = $almacen->guardaEntrada($_POST["provid"],$_POST["requi"],$_POST["recibe"],$_POST["productos"]);
+    echo $response;
+}else{
+    //Llamada a la vista
 require_once($path."view/almacen/almacen.php");
+};
+
 ?>

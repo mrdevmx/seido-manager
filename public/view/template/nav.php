@@ -13,13 +13,12 @@
 						</ul>
                     </li>
 
-                    <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+                    <li><a class="has-arrow ai-icon" href="./almacen" aria-expanded="false">
 							<i class="flaticon-381-layer-1"></i>
 							<span class="nav-text">Almacen</span>
 						</a>
                         <ul aria-expanded="false">
                             <li><a href="./almacen">Kardex</a></li>
-                            <!--<li><a href="./polizaventas">Poliza Ventas</a></li>-->
                         </ul>
                     </li>
 

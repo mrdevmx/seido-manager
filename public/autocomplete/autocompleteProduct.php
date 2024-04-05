@@ -1,5 +1,5 @@
 <?php 
-
+require_once("../../db/db.php");
 
   define('DB_HOST', 'localhost');
   define('DB_USER', 'root');
@@ -33,7 +33,7 @@
       $stmt->execute(array('phrase' => '%'.$_GET['phrase'].'%'));
       
       while($row = $stmt->fetch()) {
-        $return_arr[] = array('prodid' => $row['Cri_Id'],'producto' => utf8_encode($row['Cri_Descrip']), 'precio' => utf8_encode($row['Cri_PreUnit']), 'unidad' => utf8_encode($row['Cun_NomClav']));        
+        $return_arr[] = array('producto' => utf8_encode($row['Cri_Descrip']), 'precio' => utf8_encode($row['Cri_PreUnit']), 'unidad' => utf8_encode($row['Cun_NomClav']));        
       }
     }catch(PDOException $e) {
       echo 'ERROR: ' . $e->getMessage();
