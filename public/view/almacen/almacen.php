@@ -19,6 +19,9 @@ $(document).ready(function() {
     $(document).on("click", ".remove .remove_btn", function() {
         $(this).parent('.remove').remove();
     });
+    $(document).on("click", ".removes .remove_btn", function() {
+        $(this).parent('.removes').remove();
+    });
     /*$(document).on("keypress", "#div_prov #prov", function (e) {
           console.log(e);
           console.log($(this));
@@ -188,11 +191,13 @@ $("#btn-send").click(function() {
         obj.push(tmp);
     }
 
+    var modo = $('#modo').val();
     var provid = $('#provid').val();
     var requi = $('#requi').val();
     var recibe = $('#recibe').val();
 
     var postData = {
+        'modo': modo,
         'provid': provid,
         'requi': requi,
         'recibe': recibe,
@@ -223,11 +228,108 @@ $("#btn-send").click(function() {
             Swal.fire({
                 icon: 'error',
                 title: 'Oops...',
-                text: textStatus,
+                text: 'Comuniquese con el administrador del sistema',
             })
         }
     });
 });
+
+
+
+/***** SALIDAS *****/
+$("#agregarsalida").click(function() {
+    var cont = $(".removes").length;
+    var index = cont + 1;
+    var add = '\n\
+            <div class="removes form-row" id="' + index + '">\n\
+                 <div class="form-group col-md-4 input-info" id="producto">\n\
+                     <input type="text" id="producto_' + index + '" name="producto[]" class="producto form-control" placeholder="">\n\
+                     <input type="text" id="prodid_' + index + '" name="prodid[]" class="form-control" placeholder="" style="display:none;">\n\
+                 </div>\n\
+                 <div class="form-group col-md-2 input-info">\n\
+                     <input type="text" id="unidad_' + index + '" name="unidad[]" class="form-control" disabled>\n\
+                 </div>\n\
+                 <div class="form-group col-md-1 input-info">\n\
+                     <input type="text" id="cantidad_' + index + '" name="cantidad[]" onkeyup="calcularMult(' + index + ')" class="form-control">\n\
+                 </div>\n\
+                 <div class="form-group col-md-2 input-group input-info">\n\
+                    <div class="input-group-prepend">\n\
+                        <div class="input-group-text"><i class="la la-dollar"></i></div>\n\
+                    </div>\n\
+                    <input type="text" id="pu_' + index + '" name="pu[]" onkeyup="calcularMult(' + index + ')" class="form-control">\n\
+                 </div>\n\
+                 <div class="form-group col-md-2 input-group input-info">\n\
+                    <div class="input-group-prepend">\n\
+                        <div class="input-group-text"><i class="la la-dollar"></i></div>\n\
+                    </div>\n\
+                    <input type="number" id="total_' + index + '" name="total[]" class="form-control" disabled>\n\
+                 </div>\n\
+                 <button type="button" class="remove_btn btn btn-danger btn-xs" style="margin: auto;"><i class="fa fa-close"></i></button>\n\
+            </div>';
+
+    $("#frmrsalidas").append(add);
+
+    var provid = $("#provid").val();
+    var product = {
+        url: function(phrase) {
+            return "./view/almacen/autocompleteProduct.php?phrase=" + phrase + "&provid=" + provid +
+                "&format=json";
+        },
+        getValue: "producto",
+        list: {
+            maxNumberOfElements: 10000,
+            hideOnEmptyPhrase: true,
+            match: {
+                enabled: false,
+                caseSensitive: false,
+                method: function(element, phrase) {
+
+                    if (element.search(phrase) > -1) {
+                        return true;
+                    } else {
+                        return false;
+                    }
+                }
+            },
+            showAnimation: {
+                type: "slide", //normal|slide|fade
+                time: 400,
+                callback: function() {}
+            },
+
+            hideAnimation: {
+                type: "slide",
+                time: 400,
+                callback: function() {}
+            },
+            onClickEvent: function() {
+                console.log();
+                var selectedItemValue = $("#producto_" + index).getSelectedItemData().prodid;
+                $("#prodid_" + index).val(selectedItemValue).trigger("change");
+
+                var selectedUnidad = $("#producto_" + index).getSelectedItemData().unidad;
+                $("#unidad_" + index).val(selectedUnidad).trigger("change");
+
+                var selectedUnidad = $("#producto_" + index).getSelectedItemData().precio;
+                $("#pu_" + index).val(selectedUnidad).trigger("change");
+            }
+        }
+    };
+    $("#producto_" + index).easyAutocomplete(product);
+});
+
+function onoffs() {
+    console.log($("#destino").val());
+    if ($("#solicita").val() != '' || $("#autoriza").val() != '') {
+        if($("#entrega").val() != ''){
+            $("#agregarsalida").removeAttr('disabled');
+            $('.removes').remove();
+        }
+    } else {
+        $("#agregarsalida").prop("disabled", true);
+        $('.removes').remove();
+    }
+}
 </script>
 
 </html>
