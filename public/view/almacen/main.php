@@ -99,16 +99,13 @@
                                 <div class="form-group row" style="display:none">
                                     <label class="col-sm-4 col-form-label">Modo</label>
                                     <div class="col-sm-8">
-                                        <input type="text" id="modo" name="modo" class="form-control" value="2">
+                                        <input type="text" id="modos" name="modos" class="form-control" value="2">
                                     </div>
                                 </div>
                                 <div class="form-row">
                                     <div class="form-group col-md-3 input-info">
                                         <label>Solicita</label>
-                                        <input type="text" id="provname" name="provname" class="form-control"
-                                            placeholder="" onchange="onoffs()">
-                                        <input type="text" id="solicita" name="solicita" class="form-control" placeholder=""
-                                            style="display:none;">
+                                        <input type="text" id="solicita" name="solicita" class="form-control" onchange="onoffs()">
                                     </div>
                                     <div class="form-group col-md-3 input-info">
                                         <label>Autoriza</label>
@@ -142,13 +139,13 @@
                                         <label>Unidad</label>
                                     </div>
                                     <div class="form-group col-md-1">
+                                        <label>Existencia</label>
+                                    </div>
+                                    <div class="form-group col-md-1">
                                         <label>Cantidad</label>
                                     </div>
-                                    <div class="form-group col-md-2">
-                                        <label>P.U</label>
-                                    </div>
-                                    <div class="form-group col-md-2">
-                                        <label>Total</label>
+                                    <div class="form-group col-md-3">
+                                        <label>Comentario</label>
                                     </div>
                                 </div>
                             </form>
@@ -160,7 +157,7 @@
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-sm btn-danger light" data-dismiss="modal">Cerrar</button>
-                        <a href="javascript:void()" id="btn-send" class="btn btn-sm btn-primary text-white">Agregar</a>
+                        <a href="javascript:void()" id="btn-send-salida" class="btn btn-sm btn-primary text-white">Agregar</a>
                     </div>
                 </div>
             </div>
@@ -201,7 +198,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <?php print $table; ?>
+                                    <?php print $tableKardex; ?>
                                 </tbody>
                                 <tfoot>
                                     <tr>
