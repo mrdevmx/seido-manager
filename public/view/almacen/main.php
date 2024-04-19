@@ -164,13 +164,13 @@
         </div>
         <!-- row -->
         <div class="row">
-            <div class="col-xl-4 col-lg-12">
+            <div class="col-xl-6 col-lg-12">
                 <div class="card">
                     <div class="card-header border-0 pb-0">
                         <h4 class="card-title">Timeline</h4>
                     </div>
                     <div class="card-body">
-                        <div id="DZ_W_TimeLine" class="widget-timeline dz-scroll" style="height:370px;">
+                        <div id="DZ_W_TimeLine" class="widget-timeline dz-scroll">
                             <ul class="timeline">
                                 <?php print $timelineMovimientosResumen; ?>
                             </ul>
@@ -178,7 +178,80 @@
                     </div>
                 </div>
             </div>
-            <div class="col-xl-8">
+            <div class="col-xl-6 col-lg-12">
+                <div class="card">
+                    <div class="card-header  border-0 pb-0">
+                        <h4 class="card-title">Notificaciones</h4>
+                    </div>
+                    <div class="card-body"> 
+                        <div id="DZ_W_Todo1" class="widget-media dz-scroll" style="height:400px;">
+                            <ul class="timeline">
+                                <li>
+                                    <div class="timeline-panel">
+			    						<div class="media mr-2 media-warning">
+			    							<i class="la la-exclamation"></i>
+			    						</div>
+                                        <div class="media-body">
+			    							<h5 class="mb-1">Dr sultads Send you Photo</h5>
+			    							<small class="d-block">29 July 2020 - 02:26 PM</small>
+			    						</div>
+			    						<div class="dropdown">
+			    							<button type="button" class="btn btn-warning light sharp" data-toggle="dropdown">
+			    								<svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
+			    							</button>
+			    							<div class="dropdown-menu">
+			    								<a class="dropdown-item" href="#">Edit</a>
+			    								<a class="dropdown-item" href="#">Delete</a>
+			    							</div>
+			    						</div>
+			    					</div>
+                                </li>
+                                <li>
+                                    <div class="timeline-panel">
+			    						<div class="media mr-2 media-danger">
+			    							<i class="la la-times-circle-o"></i>
+			    						</div>
+			    						<div class="media-body">
+			    							<h5 class="mb-1">Resport created successfully</h5>
+			    							<small class="d-block">29 July 2020 - 02:26 PM</small>
+			    						</div>
+			    						<div class="dropdown">
+			    							<button type="button" class="btn btn-danger light sharp" data-toggle="dropdown">
+			    								<svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
+			    							</button>
+			    							<div class="dropdown-menu">
+			    								<a class="dropdown-item" href="#">Edit</a>
+			    								<a class="dropdown-item" href="#">Delete</a>
+			    							</div>
+			    						</div>
+			    					</div>
+                                </li>
+			    				 <li>
+                                    <div class="timeline-panel">
+			    						<div class="media mr-2 media-info">
+			    							<i class="la la-flag-o"></i>
+			    						</div>
+                                        <div class="media-body">
+			    							<h5 class="mb-1">Dr sultads Send you Photo</h5>
+			    							<small class="d-block">29 July 2020 - 02:26 PM</small>
+			    						</div>
+			    						<div class="dropdown">
+			    							<button type="button" class="btn btn-info light sharp" data-toggle="dropdown">
+			    								<svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
+			    							</button>
+			    							<div class="dropdown-menu">
+			    								<a class="dropdown-item" href="#">Edit</a>
+			    								<a class="dropdown-item" href="#">Delete</a>
+			    							</div>
+			    						</div>
+			    					</div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+			</div>
+            <div class="col-xl-12">
                 <div class="card">
                     <div class="card-header">
                         <div class="container">
