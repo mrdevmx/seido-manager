@@ -33,10 +33,10 @@ class almacenModel{
                                      Ent_Requic as 'origen'
                                     ,Cpo_NomCome as 'destino'
                                     ,case
+                                        when datediff(now(), Ent_FecMod) > 3 then concat('El ',date_format(Ent_FecMod,'%d %M %Y'))
                                         when minute(timediff(now(), Ent_FecMod)) < 3 then 'Recien' 
                                         when hour(timediff(now(), Ent_FecMod)) > 0 and hour(timediff(now(), Ent_FecMod)) < 12 then concat('Hace ',hour(timediff(now(), Ent_FecMod)),' horas' )
                                         when hour(timediff(now(), Ent_FecMod)) > 11 then concat('Hace ',datediff(now(), Ent_FecMod),' días')
-                                        when datediff(now(), Ent_FecMod) > 3 then concat('El ',date_format(Ent_FecMod,'%d %M %Y'))
                                         else concat('Hace ',minute(timediff(now(), Ent_FecMod)),' minutos' ) 
                                      end as 'fecha'
                                     ,count(Ent_Requic) as 'productos'
@@ -52,10 +52,10 @@ class almacenModel{
                                      Sal_SolPer as 'origen'
                                     ,Sal_Destin as 'destino'
                                     ,case 
+                                        when datediff(now(), Sal_FecAlt) > 3 then concat('El ',date_format(Sal_FecAlt,'%d %M %Y'))
                                         when minute(timediff(now(), Sal_FecAlt)) < 2 then 'Recien'
                                         when hour(timediff(now(), Sal_FecAlt)) > 0 and hour(timediff(now(), Sal_FecAlt)) < 12 then concat('Hace ',hour(timediff(now(), Sal_FecAlt)),' horas' )
                                         when hour(timediff(now(), Sal_FecAlt)) > 11 then concat('Hace ',datediff(now(), Sal_FecAlt),' días' )
-                                        when datediff(now(), Sal_FecAlt) > 3 then concat('El ',date_format(Sal_FecAlt,'%d %M %Y'))
                                         else concat('Hace ',minute(timediff(now(), Sal_FecAlt)),' minutos' ) 
                                      end as 'fecha'
                                     ,count(Sal_Solici) as 'productos'
