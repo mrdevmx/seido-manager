@@ -33,7 +33,7 @@
       $stmt->execute(array('phrase' => '%'.$_GET['phrase'].'%'));
       
       while($row = $stmt->fetch()) {
-        $return_arr[] = array('prodid' => $row['Ent_Produc'],'producto' => utf8_encode($row['producto']), 'unidad' => utf8_encode($row['Cun_NomClav']), 'existencia' => utf8_encode($row['existencia']));        
+        $return_arr[] = array('prodid' => $row['Cri_Id'],'producto' => utf8_encode($row['producto']), 'unidad' => utf8_encode($row['Cun_NomClav']), 'existencia' => utf8_encode($row['existencia']));        
       }
     }catch(PDOException $e) {
       echo 'ERROR: ' . $e->getMessage();
