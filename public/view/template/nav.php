@@ -13,20 +13,34 @@
 						</ul>
                     </li>
 
+                    <li><a class="has-arrow ai-icon" href="./almacen" aria-expanded="false">
+							<i class="flaticon-381-layer-1"></i>
+							<span class="nav-text">Almacen</span>
+						</a>
+                        <ul aria-expanded="false">
+                            <li><a href="./almacen">Kardex</a></li>
+                        </ul>
+                    </li>
+
                     <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 							<i class="flaticon-381-database"></i>
 							<span class="nav-text">Catálogos</span>
 						</a>
                         <ul aria-expanded="false">
                             <li><a href="./usuarios">Catálogo Usuarios</a></li>
+                            <li><a href="./catarticulos">Catálogo Artículos</a></li>
                             <!--<li><a href="./polizaventas">Poliza Ventas</a></li>-->
                         </ul>
                     </li>
                 </ul>
             
-				<div class="copyright">
-					<p class="text-center" style="padding: 0 !important; margin: 0 !important;"><strong>MR. DEV</strong></p>
-                    <p class="text-center" style="padding: 0 !important; margin: 0 !important">© 2022 All Rights Reserved</p>
+				<div class="container copyright text-center">
+                    <img src="./src/images/icono_mrdev_svg.svg" alt="MRDEV">
+					<p class="text-center" style="padding: 0 !important; margin: 0 !important; display: inline-flex">
+                        <strong>MR. DEV</strong></p>
+                    <p class="text-center" style="padding: 0 !important; margin: 0 !important">
+                        © <?php echo date("Y"); ?> All Rights Reserved
+                    </p>
 					
 				</div>
 			</div>
