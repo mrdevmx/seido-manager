@@ -3,14 +3,14 @@
         <div class="row page-titles mx-0">
             <div class="col-sm-6 p-md-0">
                 <div class="welcome-text">
-                    <h4>Catálogo Artículos</h4>
+                    <h4>Catálogo Productos</h4>
                     <span>Element</span>
                 </div>
             </div>
             <div class="col-sm-6 p-md-0 justify-content-sm-end mt-2 mt-sm-0 d-flex">
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item"><a href="javascript:void(0)">Catálogos</a></li>
-                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Artículos</a></li>
+                    <li class="breadcrumb-item active"><a href="javascript:void(0)">Productos</a></li>
                 </ol>
             </div>
         </div>
@@ -19,20 +19,20 @@
             <div class="col-12">
                 <div class="card">
                     <div class="card-header">
-                        <h4 class="card-title">Listado de Artículos</h4>
+                        <h4 class="card-title">Listado de Productos</h4>
                         <button type="button" id="btnaddus" class="btn btn-sm btn-primary mb-2" data-toggle="modal"
-                            data-target="#modalArticulo">Agregar Artículo</button>
+                            data-target="#modalArticulo">Agregar Producto</button>
                         <div class="modal fade" id="modalArticulo">
                             <div class="modal-dialog modal-dialog-centered" role="document">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h5 class="modal-title"><label id="titleus">Nuevo Artículo</label></h5>
+                                        <h5 class="modal-title"><label id="titleus">Nuevo Producto</label></h5>
                                         <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
                                         </button>
                                     </div>
                                     <div class="modal-body">
                                         <div class="basic-form">
-                                            <form id="frmuser" name="frmuser" method="post"
+                                            <form id="frmproducto" name="frmproducto" method="post"
                                                 enctype="multipart/form-data">
                                                 <div class="form-group row" style="display:none">
                                                     <label class="col-sm-4 col-form-label">Modo</label>
@@ -44,45 +44,27 @@
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
-                                                    <label class="col-sm-4 col-form-label">Nombre</label>
+                                                    <label class="col-sm-4 col-form-label">Producto</label>
                                                     <div class="col-sm-8">
-                                                        <input type="text" id="nombre" name="nombre"
+                                                        <input type="text" id="producto" name="producto"
                                                             class="form-control" placeholder="">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
-                                                    <label class="col-sm-4 col-form-label">Apellido</label>
+                                                    <label class="col-sm-4 col-form-label">Unidad</label>
                                                     <div class="col-sm-8">
-                                                        <input type="text" id="apellido" name="apellido"
-                                                            class="form-control" placeholder="">
+                                                        <select class="form-control" id="multi-value-select">
+                                                            <?php print $selectUnidades; ?>
+                                                        </select>
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
-                                                    <label class="col-sm-4 col-form-label">Correo</label>
-                                                    <div class="col-sm-8 input-group">
-                                                        <input type="text" id="correo" name="correo"
-                                                            class="form-control" placeholder="">
-                                                        <div class="input-group-append">
-                                                            <span class="input-group-text">@dimasur.com.mx</span>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row" id="hiddencon">
-                                                    <label id="newpass"
-                                                        class="col-sm-4 col-form-label">Contraseña</label>
+                                                    <label class="col-sm-4 col-form-label">Proveedor</label>
                                                     <div class="col-sm-8">
-                                                        <input type="text" id="contrasena" name="contrasena"
-                                                            class="form-control" placeholder="">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label class="col-sm-4 col-form-label">Tipo Usuario</label>
-                                                    <div class="col-sm-8">
-                                                        <select id="tipous" name="tipous" class="form-control">
-                                                            <option value="selected">Seleccione</option>
-                                                            <option value="2">Administrador</option>
-                                                            <option value="3">Contador</option>
-                                                            <option value="4">Observador</option>
+                                                        <select class="form-control" id="multi-value-select" multiple="multiple">
+                                                            <option selected="selected">orange</option>
+                                                            <option>white</option>
+                                                            <option selected="selected">purple</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -92,47 +74,8 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-sm btn-danger light"
                                             data-dismiss="modal">Cerrar</button>
-                                        <a href="javascript:void()" id="btnfrmuser"
+                                        <a href="javascript:void()" id="btnfrmproducto"
                                             class="btn btn-sm btn-primary text-white">Agregar</a>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="modal fade" id="modalArticuloContrasenia">
-                            <div class="modal-dialog modal-dialog-centered" role="document">
-                                <div class="modal-content">
-                                    <div class="modal-header">
-                                        <h5 class="modal-title">Cambiar Contraseña</h5>
-                                        <button type="button" class="close" data-dismiss="modal"><span>&times;</span>
-                                        </button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <div class="basic-form">
-                                            <form id="frmusercontrasenia" name="frmusercontrasenia" method="post"
-                                                enctype="multipart/form-data">
-                                                <div class="form-group row" style="display:none">
-                                                    <label class="col-sm-4 col-form-label">id</label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" id="idcontrasenia" name="idcontrasenia" class="form-control"
-                                                            value="0">
-                                                    </div>
-                                                </div>
-                                                <div class="form-group row">
-                                                    <label id="newpass"
-                                                        class="col-sm-4 col-form-label">Nueva Contraseña</label>
-                                                    <div class="col-sm-8">
-                                                        <input type="text" id="contrasenaid" name="contrasenaid"
-                                                            class="form-control" placeholder="">
-                                                    </div>
-                                                </div>
-                                            </form>
-                                        </div>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-sm btn-danger light"
-                                            data-dismiss="modal">Cerrar</button>
-                                        <a href="javascript:void()" id="btncontrasenia"
-                                            class="btn btn-sm btn-primary text-white">Actualizar</a>
                                     </div>
                                 </div>
                             </div>

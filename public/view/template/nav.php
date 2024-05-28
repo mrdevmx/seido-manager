@@ -18,7 +18,7 @@
 							<span class="nav-text">Almacen</span>
 						</a>
                         <ul aria-expanded="false">
-                            <li><a href="./almacen">Kardex</a></li>
+                            <li><a href="./almacen">Dashboard</a></li>
                         </ul>
                     </li>
 
@@ -28,7 +28,7 @@
 						</a>
                         <ul aria-expanded="false">
                             <li><a href="./usuarios">Catálogo Usuarios</a></li>
-                            <li><a href="./catarticulos">Catálogo Artículos</a></li>
+                            <li><a href="./catarticulos">Catálogo Productos</a></li>
                             <!--<li><a href="./polizaventas">Poliza Ventas</a></li>-->
                         </ul>
                     </li>
