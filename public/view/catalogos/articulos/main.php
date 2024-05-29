@@ -45,7 +45,7 @@
                                                 </div>
                                                 <div class="form-group row">
                                                     <label class="col-sm-4 col-form-label">Producto</label>
-                                                    <div class="col-sm-8">
+                                                    <div class="col-sm-8 input-info">
                                                         <input type="text" id="producto" name="producto"
                                                             class="form-control" placeholder="">
                                                     </div>
@@ -53,7 +53,7 @@
                                                 <div class="form-group row">
                                                     <label class="col-sm-4 col-form-label">Unidad</label>
                                                     <div class="col-sm-8">
-                                                        <select class="form-control" id="multi-value-select">
+                                                        <select class="form-control" id="unidad" name ="unidad">
                                                             <?php print $selectUnidades; ?>
                                                         </select>
                                                     </div>
@@ -61,10 +61,8 @@
                                                 <div class="form-group row">
                                                     <label class="col-sm-4 col-form-label">Proveedor</label>
                                                     <div class="col-sm-8">
-                                                        <select class="form-control" id="multi-value-select" multiple="multiple">
-                                                            <option selected="selected">orange</option>
-                                                            <option>white</option>
-                                                            <option selected="selected">purple</option>
+                                                        <select class="form-control" id="proveedor" name="proveedor" multiple="multiple">
+                                                            <?php print $selectProveedores; ?>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -74,7 +72,7 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-sm btn-danger light"
                                             data-dismiss="modal">Cerrar</button>
-                                        <a href="javascript:void()" id="btnfrmproducto"
+                                        <a href="javascript:void()" id="btn-guarda-articulo"
                                             class="btn btn-sm btn-primary text-white">Agregar</a>
                                     </div>
                                 </div>
@@ -88,10 +86,7 @@
                                     <tr>
                                         <th class="text-center">#</th>
                                         <th>Descripción</th>
-                                        <th>SKU</th>
                                         <th>Unidad</th>
-                                        <th>Precio</th>
-                                        <th>Proveedor</th>
                                         <th>Estatus</th>
                                         <th class="text-center">Acciones</th>
                                     </tr>
@@ -103,10 +98,7 @@
                                     <tr>
                                         <th class="text-center">#</th>
                                         <th>Descripción</th>
-                                        <th>SKU</th>
                                         <th>Unidad</th>
-                                        <th>Precio</th>
-                                        <th>Proveedor</th>
                                         <th>Estatus</th>
                                         <th class="text-center">Acciones</th>
                                     </tr>

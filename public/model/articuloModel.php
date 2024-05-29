@@ -23,16 +23,12 @@ class articulosModel{
     public function getarticulos(){
         $query=$this->db->query("select 
                                      Cri_Id
-                                    ,Cri_SKU
                                     ,Cri_Descrip
                                     ,Cun_NomClav
-                                    ,Cpo_NomCome
-                                    ,concat('$', format(Cri_PreUnit, 2, 'en_US')) as Cri_PreUnit
                                     ,convert(Cri_FecAlta, char(10)) as Cri_FecAlta
                                     ,Cri_Estatus
                                 from ".$this -> table." 
-                                inner join ADCATUNI on Cun_Clave = Cri_Unidad
-                                inner join ADCATPRO on Cpo_Id = Cri_Proveed");
+                                inner join ADCATUNI on Cun_Id  = Cri_Unidad");
         if ($query->num_rows > 0) {
             while($row=$query->fetch_assoc()){
                 $this->articulos[]=$row;
@@ -45,7 +41,16 @@ class articulosModel{
     }
 
     public function getArticuloById($id){
-		$query=$this->db->query("select * from ".$this->table." where Cri_Id = ".$id);
+		$query=$this->db->query("select
+                                     Cri_Id
+                                    ,Cri_Descrip
+                                    ,Cri_Unidad
+                                    ,Cri_Proveed
+                                    ,Cri_Familia
+                                    ,convert(Cri_FecAlta, char(10)) as Cri_FecAlta
+                                    ,convert(Cri_FecModi, char(10)) as Cri_FecModi
+                                    ,Cri_Estatus 
+                                from ".$this->table." where Cri_Id = ".$id);
         if ($query->num_rows > 0) {
 		    while($row=$query->fetch_assoc()){
                 $this->articulos[]=$row;
@@ -67,10 +72,7 @@ class articulosModel{
                 <tr>
                     <td align="center">$i</td>
                     <td>{$articulo["Cri_Descrip"]}</td>
-                    <td>{$articulo["Cri_SKU"]}</td>
                     <td>{$articulo["Cun_NomClav"]}</td>
-                    <td>{$articulo["Cri_PreUnit"]}</td>
-                    <td>{$articulo["Cpo_NomCome"]}</td>
                     <td>$estatus</td>
                     <td class="text-center">
                     <div class="dropdown ml-auto text-center">
@@ -88,6 +90,23 @@ class articulosModel{
             $i++;
         }
         return $this->tableView;
+    }
+
+    public function saveArticulo($producto,$unidad,$proveedores){
+
+        $sql = "INSERT INTO ALCATART (Cri_CodBarr, Cri_Descrip, Cri_Unidad, Cri_FecAlta, Cri_FecModi, Cri_Estatus, Cri_Familia, Cri_Proveed) values ";
+        $sql .= "(0,'".$producto."',".$unidad.",now(),now(),1,0, '".json_encode($proveedores)."');";
+
+        $result = $this->db->query($sql); 
+
+        if(!$result) {
+            $response = "Error en la inserción: ";
+        }else{
+            $response = ($result) ? true : false;
+        }
+
+        $this->db->close();
+		return $response;	
     }
 }
 ?>
