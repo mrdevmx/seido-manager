@@ -18,12 +18,14 @@ $pathTemplate = "./";
 <script>
     $("#btn-guarda-articulo").click(function() {
     var modo = $('#modo').val();
+    var id = $('#id').val();
     var producto = $('#producto').val();
     var unidad = $('#unidad').val();
     var proveedor = $('#proveedor').val();
 
     var postData = {
         'modo': modo,
+        'id': id,
         'producto': producto,
         'unidad': unidad,
         'proveedor': proveedor,
@@ -58,5 +60,43 @@ $pathTemplate = "./";
         }
     });
 });
+
+function cargardatos(id){
+    var formURL = "./catarticulos";
+    var postData = {
+        'modo': 2,
+        'id': id,
+    };
+
+    $.ajax({
+        url : formURL,
+        type: "POST",
+        datetype: "json",
+        async: false,
+        data : postData,
+        success:function(data,textStatus){
+         data = JSON.parse(data);
+         console.log(data);
+         console.log(data[0].Cri_Id);
+            $('#modo').val(1);
+            $('#id').val(data[0].Cri_Id);
+            $('#producto').val(data[0].Cri_Descrip);
+            $('#unidad').val(data[0].Cri_Unidad);
+        proveedor = JSON.parse(data[0].Cri_Proveed);
+        console.log(proveedor);
+            $('#proveedor').val(proveedor);
+            $("#modalArticulo").modal("show");
+        },
+        error: function(jqXHR, textStatus) {
+            console.log(textStatus);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Comuniquese con el administrador del sistema',
+            })
+        }
+    });
+}
+
 </script>
 </html>
