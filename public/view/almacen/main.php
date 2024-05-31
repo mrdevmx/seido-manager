@@ -49,9 +49,11 @@
                                         <label>No. Requisición</label>
                                         <input type="text" id="requi" name="requi" class="form-control">
                                     </div>
-                                    <div class="form-group col-md-3 input-info">
+                                    <div class="form-group col-sm-3 input-info">
                                         <label>Recibe</label>
-                                        <input type="text" id="recibe" name="recibe" class="form-control">
+                                        <select class="form-control" id="recibe" name ="recibe">
+                                            <?php print $usuarioSelect; ?>
+                                        </select>
                                     </div>
                                 </div>
                                 <div class="form-row">
@@ -111,9 +113,11 @@
                                         <label>Autoriza</label>
                                         <input type="text" id="autoriza" name="autoriza" class="form-control" onchange="onoffs()">
                                     </div>
-                                    <div class="form-group col-md-3 input-info">
+                                    <div class="form-group col-sm-3 input-info">
                                         <label>Entrega</label>
-                                        <input type="text" id="entrega" name="entrega" class="form-control" onchange="onoffs()">
+                                        <select class="form-control" id="entrega" name ="entrega">
+                                            <?php print $usuarioSelect; ?>
+                                        </select>
                                     </div>
                                     <div class="form-group col-md-3 input-info">
                                             <label>Destino</label>
@@ -181,7 +185,7 @@
             <div class="col-xl-6 col-lg-12">
                 <div class="card">
                     <div class="card-header  border-0 pb-0">
-                        <h4 class="card-title">Notificaciones</h4>
+                        <h4 class="card-title">Entradas, Salidas y Notificaciones</h4>
                     </div>
                     <div class="card-body"> 
                         <div id="DZ_W_Todo1" class="widget-media dz-scroll" style="height:400px;">
