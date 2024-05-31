@@ -24,7 +24,7 @@ define('DB_DABA', 'uhdtgnaj_DATMANTOOLS');
                               from ALCATART 
                               right join ALENTART on Ent_Produc = Cri_Id
                               left join ALSALART on Sal_Produc = Cri_Id
-                              inner join ADCATUNI on Cri_Unidad = Cun_Clave
+                              inner join ADCATUNI on Cri_Unidad = Cun_Id
                               where Cri_Descrip LIKE :phrase 
                               group by Cri_Id
                               order by Cri_Id");

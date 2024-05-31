@@ -129,7 +129,7 @@ class almacenModel{
                 from ALCATART 
                 right join ALENTART on Ent_Produc = Cri_Id
                 left join ALSALART on Sal_Produc = Cri_Id
-                inner join ADCATUNI on Cri_Unidad = Cun_Clave
+                inner join ADCATUNI on Cri_Unidad = Cun_Id
                 group by Cri_Id
                 order by Cri_Id");
 
@@ -172,7 +172,7 @@ class almacenModel{
         return $this->tableKardex;
     }
 
-	public function guardaEntrada($provid,$requi,$recibe,$productos){
+	public function saveEntrada($provid,$requi,$recibe,$productos){
 
         $sql = "INSERT INTO ALENTART (Ent_Requic, Ent_Provee, Ent_Recibe, Ent_Produc, Ent_Cantid, Ent_PU, Ent_Total, Ent_FecAlt, Ent_FecMod, Ent_Estatu) values ";
         
@@ -199,7 +199,7 @@ class almacenModel{
 		return $response;	
 
 	}
-    public function guardaSalida($solicitud,$solicita,$autoriza,$entrega,$destino,$productos){
+    public function saveSalida($solicitud,$solicita,$autoriza,$entrega,$destino,$productos){
 
 
         $sql = "INSERT INTO ALSALART (Sal_Solici, Sal_SolPer, Sal_Autori, Sal_Entreg, Sal_Destin, Sal_Produc, Sal_Cantid, Sal_Coment, Sal_FecAlt, Sal_FecMod, Sal_Estatu) values ";

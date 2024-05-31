@@ -95,15 +95,12 @@ $("#agregar").click(function() {
                 callback: function() {}
             },
             onClickEvent: function() {
-                console.log();
                 var selectedItemValue = $("#producto_" + index).getSelectedItemData().prodid;
                 $("#prodid_" + index).val(selectedItemValue).trigger("change");
 
                 var selectedUnidad = $("#producto_" + index).getSelectedItemData().unidad;
                 $("#unidad_" + index).val(selectedUnidad).trigger("change");
 
-                var selectedUnidad = $("#producto_" + index).getSelectedItemData().precio;
-                $("#pu_" + index).val(selectedUnidad).trigger("change");
             }
         }
     };
@@ -370,7 +367,7 @@ $("#btn-send-salida").click(function() {
             console.log(data);
             Swal.fire({
                 icon: 'success',
-                title: 'Se Registró la entrada',
+                title: 'Se Registró la salida',
                 text: 'Espere un momento...',
                 showConfirmButton: false,
                 timer: 2000

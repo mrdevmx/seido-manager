@@ -23,16 +23,12 @@ class articulosModel{
     public function getarticulos(){
         $query=$this->db->query("select 
                                      Cri_Id
-                                    ,Cri_SKU
                                     ,Cri_Descrip
                                     ,Cun_NomClav
-                                    ,Cpo_NomCome
-                                    ,concat('$', format(Cri_PreUnit, 2, 'en_US')) as Cri_PreUnit
                                     ,convert(Cri_FecAlta, char(10)) as Cri_FecAlta
                                     ,Cri_Estatus
                                 from ".$this -> table." 
-                                inner join ADCATUNI on Cun_Clave = Cri_Unidad
-                                inner join ADCATPRO on Cpo_Id = Cri_Proveed");
+                                inner join ADCATUNI on Cun_Id  = Cri_Unidad");
         if ($query->num_rows > 0) {
             while($row=$query->fetch_assoc()){
                 $this->articulos[]=$row;
@@ -45,7 +41,16 @@ class articulosModel{
     }
 
     public function getArticuloById($id){
-		$query=$this->db->query("select * from ".$this->table." where Cri_Id = ".$id);
+		$query=$this->db->query("select
+                                     Cri_Id
+                                    ,Cri_Descrip
+                                    ,Cri_Unidad
+                                    ,Cri_Proveed
+                                    ,Cri_Familia
+                                    ,convert(Cri_FecAlta, char(10)) as Cri_FecAlta
+                                    ,convert(Cri_FecModi, char(10)) as Cri_FecModi
+                                    ,Cri_Estatus 
+                                from ".$this->table." where Cri_Id = ".$id);
         if ($query->num_rows > 0) {
 		    while($row=$query->fetch_assoc()){
                 $this->articulos[]=$row;
@@ -67,10 +72,7 @@ class articulosModel{
                 <tr>
                     <td align="center">$i</td>
                     <td>{$articulo["Cri_Descrip"]}</td>
-                    <td>{$articulo["Cri_SKU"]}</td>
                     <td>{$articulo["Cun_NomClav"]}</td>
-                    <td>{$articulo["Cri_PreUnit"]}</td>
-                    <td>{$articulo["Cpo_NomCome"]}</td>
                     <td>$estatus</td>
                     <td class="text-center">
                     <div class="dropdown ml-auto text-center">
@@ -78,8 +80,7 @@ class articulosModel{
                             <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
                         </div>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" onclick=" return cargardatos({$articulo["Cri_Estatus"]})" href="javascript:void()">Editar</a>
-                            <a class="dropdown-item" onclick=" return cargarid({$articulo["Cri_Estatus"]})" data-toggle="modal" data-target="#modalarticuloContrasenia" href="javascript:void()">Cambiar Contraseña</a>
+                            <a class="dropdown-item" onclick=" return cargardatos({$articulo["Cri_Id"]})" href="javascript:void()">Editar</a>
                         </div>
                     </div>
                     </td>
@@ -88,6 +89,39 @@ class articulosModel{
             $i++;
         }
         return $this->tableView;
+    }
+
+    public function saveArticulo($producto,$unidad,$proveedores){
+
+        $sql = "INSERT INTO ALCATART (Cri_CodBarr, Cri_Descrip, Cri_Unidad, Cri_FecAlta, Cri_FecModi, Cri_Estatus, Cri_Familia, Cri_Proveed) values ";
+        $sql .= "(0,'".$producto."',".$unidad.",now(),now(),1,0, '".json_encode($proveedores)."');";
+
+        $result = $this->db->query($sql); 
+
+        if(!$result) {
+            $response = "Error en la inserción: ";
+        }else{
+            $response = ($result) ? true : false;
+        }
+
+        $this->db->close();
+		return $response;	
+    }
+
+    public function updateArticulo($id,$producto,$unidad,$proveedores){
+
+        $sql = "UPDATE ALCATART SET  Cri_CodBarr = 0, Cri_Descrip = '".$producto."', Cri_Unidad = ".$unidad.", Cri_Proveed = '".json_encode($proveedores)."' where Cri_Id = ".$id;
+
+        $result = $this->db->query($sql); 
+
+        if(!$result) {
+            $response = "Error en la inserción: ";
+        }else{
+            $response = ($result) ? true : false;
+        }
+
+        $this->db->close();
+		return $response;	
     }
 }
 ?>

@@ -15,13 +15,24 @@ class usuariosModel{
     private $typeConnection = 1;
     private $usuarios;
     private $tableView;
+    private $selectView;
  
     public function __construct(){
         $this->db=Conectar::conexion($this->typeConnection);
         $this->usuarios=array();
     }
     public function getUsuarios(){
-        $query=$this->db->query("select * from ".$this -> table);
+        $query=$this->db->query("select
+                                     Usu_Id
+                                    ,Usu_Nombre
+                                    ,Usu_Apelli
+                                    ,Usu_Correo
+                                    ,Usu_Contra
+                                    ,Usu_TipUsu
+                                    ,Usu_Empres
+                                    ,convert(Usu_FecAlt, char(10)) as Usu_FecAlt
+                                    ,Usu_Estatu 
+                                from ".$this -> table);
         if ($query->num_rows > 0) {
             while($row=$query->fetch_assoc()){
                 $this->usuarios[]=$row;
@@ -74,6 +85,23 @@ class usuariosModel{
             $i++;
         }
         return $this->tableView;
+    }
+
+    public function getUsuarioSelect(){
+        $usuarios=$this->getUsuarios();
+        $i=1;
+        $this->selectView.= <<< EOT
+                    <option value="selected">Nothing selected</option>
+                EOT;
+        foreach($usuarios as $usuario){
+            if($usuario['Usu_TipUsu'] > 2){
+                $this->selectView.= <<< EOT
+                    <option value="{$usuario['Usu_Id']}">{$usuario["Usu_Nombre"]} {$usuario["Usu_Apelli"]}</option>
+                EOT;
+            }
+            $i++;
+        }
+        return $this->selectView;
     }
 }
 ?>
