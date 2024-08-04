@@ -9,11 +9,11 @@ $almacen = new almacenModel();
 if(isset($_POST["modo"])){
     if($_POST["modo"] == 1){
         $saveEntrada = new almacenModel();
-        $response = $saveEntrada->saveEntrada($_POST["provid"],$_POST["requi"],$_POST["recibe"],$_POST["productos"]);
+        $response = $saveEntrada->saveEntrada($_POST["provid"],$_POST["fecentra"],$_POST["requi"],$_POST["recibe"],$_POST["productos"]);
         echo $response;
     }else{
         $saveSalida = new almacenModel();
-        $response = $saveSalida->saveSalida($_POST["solicitud"],$_POST["solicita"],$_POST["autoriza"],$_POST["entrega"],$_POST["destino"],$_POST["productos"]);
+        $response = $saveSalida->saveSalida($_POST["solicitud"],$_POST["solicita"],$_POST["autoriza"],$_POST["entrega"],$_POST["fecsale"],$_POST["destino"],$_POST["productos"]);
         echo $response;
     }
 }else{

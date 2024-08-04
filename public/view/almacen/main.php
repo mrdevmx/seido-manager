@@ -38,7 +38,7 @@
                                     </div>
                                 </div>
                                 <div class="form-row">
-                                    <div class="form-group col-md-6 input-info">
+                                    <div class="form-group col-md-4 input-info">
                                         <label>Proveedor</label>
                                         <input type="text" id="provname" name="provname" class="form-control"
                                             placeholder="" onchange="onoff()">
@@ -46,6 +46,11 @@
                                             style="display:none;">
                                     </div>
                                     <div class="form-group col-md-3 input-info">
+                                        <label>Fecha Entrada</label>
+                                        <input type="date" id="fecentra" name="fecentra" class="form-control"
+                                            placeholder="">
+                                    </div>
+                                    <div class="form-group col-md-2 input-info">
                                         <label>No. Requisición</label>
                                         <input type="text" id="requi" name="requi" class="form-control">
                                     </div>
@@ -105,33 +110,109 @@
                                     </div>
                                 </div>
                                 <div class="form-row">
-                                    <div class="form-group col-md-3 input-info">
+                                    <div class="form-group col-md-2 input-info">
                                         <label>Solicita</label>
                                         <input type="text" id="solicita" name="solicita" class="form-control" onchange="onoffs()">
                                     </div>
-                                    <div class="form-group col-md-3 input-info">
+                                    <div class="form-group col-md-2 input-info">
                                         <label>Autoriza</label>
                                         <input type="text" id="autoriza" name="autoriza" class="form-control" onchange="onoffs()">
                                     </div>
-                                    <div class="form-group col-sm-3 input-info">
+                                    <div class="form-group col-sm-2 input-info">
                                         <label>Entrega</label>
                                         <select class="form-control" id="entrega" name ="entrega">
                                             <?php print $usuarioSelect; ?>
                                         </select>
                                     </div>
                                     <div class="form-group col-md-3 input-info">
+                                        <label>Fecha Salida</label>
+                                        <input type="date" id="fecsale" name="fecsale" class="form-control"
+                                            placeholder="">
+                                    </div>
+                                    <div class="form-group col-md-3 input-info">
                                             <label>Destino</label>
                                             <select multiple class="form-control" id="destino">
-                                                <option>Ext - Fachada Principal</option>
-                                                <option>Ext - Fachada Posterior</option>
-                                                <option>Ext - Patio Servicio</option>
-                                                <option>Ext - Lateral</option>
-                                                <option>Int - P.B Muros</option>
-                                                <option>Int - P.B Plafones</option>
-                                                <option>Int - P.B Piso</option>
-                                                <option>Int - P.A Muros</option>
-                                                <option>Int - P.A Plafones</option>
-                                                <option>Int - P.A Piso</option>
+                                                <option>Casa 60</option>
+                                                <option>Casa 61</option>
+                                                <option>Casa 62</option>
+                                                <option>Casa 63</option>
+                                                <option>Casa 64</option>
+                                                <option>Casa 65</option>
+                                                <option>Casa 66</option>
+                                                <option>Casa 67</option>
+                                                <option>Casa 68</option>
+                                                <option>Casa 69</option>
+                                                <option>Casa 70</option>
+                                                <option>Casa 71</option>
+                                                <option>Casa 72</option>
+                                                <option>Casa 73</option>
+                                                <option>Casa 74</option>
+                                                <option>Casa 75</option>
+                                                <option>Casa 76</option>
+                                                <option>Casa 77</option>
+                                                <option>Casa 78</option>
+                                                <option>Casa 79</option>
+                                                <option>Casa 80</option>
+                                                <option>Casa 81</option>
+                                                <option>Casa 82</option>
+                                                <option>Casa 83</option>
+                                                <option>Casa 84</option>
+                                                <option>Casa 85</option>
+                                                <option>Casa 86</option>
+                                                <option>Casa 87</option>
+                                                <option>Casa 88</option>
+                                                <option>Casa 89</option>
+                                                <option>Casa 90</option>
+                                                <option>Casa 91</option>
+                                                <option>Casa 92</option>
+                                                <option>Casa 93</option>
+                                                <option>Casa 94</option>
+                                                <option>Casa 95</option>
+                                                <option>Casa 96</option>
+                                                <option>Casa 97</option>
+                                                <option>Casa 98</option>
+                                                <option>Casa 99</option>
+                                                <option>Casa 100</option>
+                                                <option>Casa 101</option>
+                                                <option>Casa 102</option>
+                                                <option>Casa 103</option>
+                                                <option>Casa 104</option>
+                                                <option>Casa 105</option>
+                                                <option>Casa 106</option>
+                                                <option>Casa 107</option>
+                                                <option>Casa 108</option>
+                                                <option>Casa 109</option>
+                                                <option>Casa 110</option>
+                                                <option>Casa 111</option>
+                                                <option>Casa 112</option>
+                                                <option>Casa 113</option>
+                                                <option>Casa 114</option>
+                                                <option>Casa 115</option>
+                                                <option>Casa 116</option>
+                                                <option>Casa 117</option>
+                                                <option>Casa 118</option>
+                                                <option>Casa 119</option>
+                                                <option>Casa 120</option>
+                                                <option>Casa 121</option>
+                                                <option>Casa 122</option>
+                                                <option>Casa 123</option>
+                                                <option>Casa 124</option>
+                                                <option>Casa 125</option>
+                                                <option>Casa 126</option>
+                                                <option>Casa 127</option>
+                                                <option>Casa 128</option>
+                                                <option>Casa 129</option>
+                                                <option>Casa 130</option>
+                                                <option>Casa 131</option>
+                                                <option>Casa 132</option>
+                                                <option>Casa 133</option>
+                                                <option>Casa 134</option>
+                                                <option>Casa 135</option>
+                                                <option>Casa 136</option>
+                                                <option>Casa 137</option>
+                                                <option>Casa 138</option>
+                                                <option>Casa 139</option>
+                                                <option>Casa 140</option>
                                             </select>
                                     </div>
                                 </div>

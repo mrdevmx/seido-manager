@@ -172,17 +172,17 @@ class almacenModel{
         return $this->tableKardex;
     }
 
-	public function saveEntrada($provid,$requi,$recibe,$productos){
+	public function saveEntrada($provid,$fecentra,$requi,$recibe,$productos){
 
-        $sql = "INSERT INTO ALENTART (Ent_Requic, Ent_Provee, Ent_Recibe, Ent_Produc, Ent_Cantid, Ent_PU, Ent_Total, Ent_FecAlt, Ent_FecMod, Ent_Estatu) values ";
+        $sql = "INSERT INTO ALENTART (Ent_Requic, Ent_Provee, Ent_FecEnt, Ent_Recibe, Ent_Produc, Ent_Cantid, Ent_PU, Ent_Total, Ent_FecAlt, Ent_FecMod, Ent_Estatu) values ";
         
         foreach ($productos as $index => $producto) {
             if(count($productos) == 1){
-                $sql .= "('".$requi."',".$provid.",".$recibe.",".$producto['prodid'].",".$producto['cantidad'].",".$producto['precio'].",".$producto['subtotal'].",now(),now(),1);";
+                $sql .= "('".$requi."',".$provid.",'".$fecentra."',".$recibe.",".$producto['prodid'].",".$producto['cantidad'].",".$producto['precio'].",".$producto['subtotal'].",now(),now(),1);";
             }else if($index != count($productos) - 1) {
-                $sql .= "('".$requi."',".$provid.",".$recibe.",".$producto['prodid'].",".$producto['cantidad'].",".$producto['precio'].",".$producto['subtotal'].",now(),now(),1),";
+                $sql .= "('".$requi."',".$provid.",'".$fecentra."',".$recibe.",".$producto['prodid'].",".$producto['cantidad'].",".$producto['precio'].",".$producto['subtotal'].",now(),now(),1),";
             }else{
-                $sql .= "('".$requi."',".$provid.",".$recibe.",".$producto['prodid'].",".$producto['cantidad'].",".$producto['precio'].",".$producto['subtotal'].",now(),now(),1);";
+                $sql .= "('".$requi."',".$provid.",'".$fecentra."',".$recibe.",".$producto['prodid'].",".$producto['cantidad'].",".$producto['precio'].",".$producto['subtotal'].",now(),now(),1);";
             }
                 
         }
@@ -199,21 +199,21 @@ class almacenModel{
 		return $response;	
 
 	}
-    public function saveSalida($solicitud,$solicita,$autoriza,$entrega,$destino,$productos){
+    public function saveSalida($solicitud,$solicita,$autoriza,$entrega,$fecsale,$destino,$productos){
 
 
-        $sql = "INSERT INTO ALSALART (Sal_Solici, Sal_SolPer, Sal_Autori, Sal_Entreg, Sal_Destin, Sal_Produc, Sal_Cantid, Sal_Coment, Sal_FecAlt, Sal_FecMod, Sal_Estatu) values ";
+        $sql = "INSERT INTO ALSALART (Sal_Solici, Sal_SolPer, Sal_Autori, Sal_Entreg, Sal_FecSal, Sal_Destin, Sal_Produc, Sal_Cantid, Sal_Coment, Sal_FecAlt, Sal_FecMod, Sal_Estatu) values ";
 
         foreach ($productos as $index => $producto) {
             if(count($productos) == 1){
-                $sql .= "(concat('".$solicitud."/',replace(date_format(now(), '%Y-%m-%d %T'), ' ', '/')),'".$solicita."','".$autoriza."',".$entrega.", '".json_encode($destino)."',".$producto['prodid'].",".$producto['cantidad'].",'".$producto['comentario']."',now(),now(),1);";
+                $sql .= "(concat('".$solicitud."/',replace(date_format(now(), '%Y-%m-%d %T'), ' ', '/')),'".$solicita."','".$autoriza."',".$entrega.",'".$fecsale."', '".json_encode($destino)."',".$producto['prodid'].",".$producto['cantidad'].",'".$producto['comentario']."',now(),now(),1);";
             }else if($index != count($productos) - 1) {
-                $sql .= "(concat('".$solicitud."/',replace(date_format(now(), '%Y-%m-%d %T'), ' ', '/')),'".$solicita."','".$autoriza."',".$entrega.", '".json_encode($destino)."',".$producto['prodid'].",".$producto['cantidad'].",'".$producto['comentario']."',now(),now(),1),";
+                $sql .= "(concat('".$solicitud."/',replace(date_format(now(), '%Y-%m-%d %T'), ' ', '/')),'".$solicita."','".$autoriza."',".$entrega.",'".$fecsale."', '".json_encode($destino)."',".$producto['prodid'].",".$producto['cantidad'].",'".$producto['comentario']."',now(),now(),1),";
             }else{
-                $sql .= "(concat('".$solicitud."/',replace(date_format(now(), '%Y-%m-%d %T'), ' ', '/')),'".$solicita."','".$autoriza."',".$entrega.", '".json_encode($destino)."',".$producto['prodid'].",".$producto['cantidad'].",'".$producto['comentario']."',now(),now(),1);";
+                $sql .= "(concat('".$solicitud."/',replace(date_format(now(), '%Y-%m-%d %T'), ' ', '/')),'".$solicita."','".$autoriza."',".$entrega.",'".$fecsale."', '".json_encode($destino)."',".$producto['prodid'].",".$producto['cantidad'].",'".$producto['comentario']."',now(),now(),1);";
             }       
         }
-
+        
         $result = $this->db->query($sql); 
 
         if(!$result) {
