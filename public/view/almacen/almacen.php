@@ -190,12 +190,14 @@ $("#btn-send").click(function() {
 
     var modo = $('#modo').val();
     var provid = $('#provid').val();
+    var fecentra = $("#fecentra").val();
     var requi = $('#requi').val();
     var recibe = $('#recibe').val();
 
     var postData = {
         'modo': modo,
         'provid': provid,
+        'fecentra': fecentra,
         'requi': requi,
         'recibe': recibe,
         'productos': obj
@@ -344,6 +346,7 @@ $("#btn-send-salida").click(function() {
     var solicita = $('#solicita').val();
     var autoriza = $('#autoriza').val();
     var entrega = $('#entrega').val();
+    var fecsale = $('#fecsale').val();
     var destino = $('#destino').val();
     var solicitud = (solicita.charAt(0)+solicita.charAt(1)+autoriza.charAt(0)+autoriza.charAt(1));
 
@@ -353,6 +356,7 @@ $("#btn-send-salida").click(function() {
         'solicita': solicita,
         'autoriza': autoriza,
         'entrega': entrega,
+        'fecsale': fecsale,
         'destino': destino,
         'productos': obj
     };
