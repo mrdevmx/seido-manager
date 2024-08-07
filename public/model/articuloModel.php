@@ -93,7 +93,7 @@ class articulosModel{
 
     public function saveArticulo($producto,$unidad,$proveedores){
 
-        $sql = "INSERT INTO ALCATART (Cri_CodBarr, Cri_Descrip, Cri_Unidad, Cri_FecAlta, Cri_FecModi, Cri_Estatus, Cri_Familia, Cri_Proveed) values ";
+        $sql = "INSERT INTO ".$this->table."  (Cri_CodBarr, Cri_Descrip, Cri_Unidad, Cri_FecAlta, Cri_FecModi, Cri_Estatus, Cri_Familia, Cri_Proveed) values ";
         $sql .= "(0,'".$producto."',".$unidad.",now(),now(),1,0, '".json_encode($proveedores)."');";
 
         $result = $this->db->query($sql); 
@@ -110,7 +110,7 @@ class articulosModel{
 
     public function updateArticulo($id,$producto,$unidad,$proveedores){
 
-        $sql = "UPDATE ALCATART SET  Cri_CodBarr = 0, Cri_Descrip = '".$producto."', Cri_Unidad = ".$unidad.", Cri_Proveed = '".json_encode($proveedores)."' where Cri_Id = ".$id;
+        $sql = "UPDATE ".$this->table."  SET  Cri_CodBarr = 0, Cri_Descrip = '".$producto."', Cri_Unidad = ".$unidad.", Cri_Proveed = '".json_encode($proveedores)."' where Cri_Id = ".$id;
 
         $result = $this->db->query($sql); 
 
