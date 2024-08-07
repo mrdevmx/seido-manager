@@ -28,6 +28,7 @@
 						</a>
                         <ul aria-expanded="false">
                             <li><a href="./usuarios">Catálogo Usuarios</a></li>
+                            <li><a href="./proveedores">Catálogo Proovedores</a></li>
                             <li><a href="./catarticulos">Catálogo Productos</a></li>
                             <!--<li><a href="./polizaventas">Poliza Ventas</a></li>-->
                         </ul>
