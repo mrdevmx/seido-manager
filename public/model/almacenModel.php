@@ -81,7 +81,7 @@ class almacenModel{
         $movimientos=$this->getMovimientosResumen();
         $i=1;
         foreach($movimientos as $movimiento){
-            $tipo = ($movimiento["tipo"] == 1) ? 'primary' : 'danger';
+            $tipo = ($movimiento["tipo"] == 1) ? 'success' : 'danger';
 
             if($movimiento["tipo"] == 1){
                 $this->tMR.= <<< EOT

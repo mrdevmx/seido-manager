@@ -28,7 +28,7 @@
 						</a>
                         <ul aria-expanded="false">
                             <li><a href="./usuarios">Catálogo Usuarios</a></li>
-                            <li><a href="./proveedores">Catálogo Proovedores</a></li>
+                            <li><a href="./proveedores">Catálogo Proveedores</a></li>
                             <li><a href="./catarticulos">Catálogo Productos</a></li>
                             <!--<li><a href="./polizaventas">Poliza Ventas</a></li>-->
                         </ul>
@@ -36,9 +36,10 @@
                 </ul>
             
 				<div class="container copyright text-center">
-                    <img src="./src/images/icono_mrdev_svg.svg" alt="MRDEV">
+                    <img src="./src/images/ico_logo_mrdev.svg" alt="MRDEV" style="width: 15px;">
 					<p class="text-center" style="padding: 0 !important; margin: 0 !important; display: inline-flex">
-                        <strong>MR. DEV</strong></p>
+                        <strong>MR<span style="color: #000;">DEV</span></strong>
+                    </p>
                     <p class="text-center" style="padding: 0 !important; margin: 0 !important">
                         © <?php echo date("Y"); ?> All Rights Reserved
                     </p>
