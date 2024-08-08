@@ -39,7 +39,7 @@
             timer: 1500
         })
         setTimeout(function(){
-            window.location.href = "./conexion/funciones/login/logout";
+            window.location.href = "./logout";
         },2500);
     });
 
