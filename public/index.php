@@ -8,7 +8,21 @@ if(!isset($_SESSION['userid'])){
     $shortname = $_SESSION['shortname'];
 	$shortlastname = $_SESSION['shortlastname'];
     $permisos = $_SESSION['tipous'];
-    $company = $_SESSION['company'];
+    $company = $_SESSION['company'];    
+
+    switch ($permisos) {
+        case 2:
+            header('Location: ./admin');
+          break;
+        case 3:
+            header('Location: ./almacen');
+          break;
+        case 4:
+            header('Location: ./almacen');
+          break;
+        default:
+          header('Location: ./almacen');
+    }
 
     $path = "./";
     $pathTheme = "./src/";
