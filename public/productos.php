@@ -10,10 +10,16 @@ if(!isset($_SESSION['userid'])){
     $permisos = $_SESSION['tipous'];
     $company = $_SESSION['company'];
 
-    $path = "./";
-    $pathTheme = "./src/";
     require_once('../vendor/autoload.php');
     require_once("../db/db.php");
+
+    $route = explode("/", $_SERVER['REQUEST_URI']);
+    require_once("../auth/validate-permissions.php");
+    $auth = new validateAuth();
+    $validate = $auth->validate_module($permisos, $route);
+
+    $path = "./";
+    $pathTheme = "./src/";
     require_once("./controller/catarticuloController.php");
 }
 ?>

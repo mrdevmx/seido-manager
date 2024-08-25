@@ -4,6 +4,7 @@
         <div class="deznav">
             <div class="deznav-scroll">
 				<ul class="metismenu" id="menu">
+                <?php if($permisos == 1){ ?>
                     <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 							<i class="flaticon-381-networking"></i>
 							<span class="nav-text">Dashboard</span>
@@ -12,7 +13,20 @@
 							<li><a href="./">Dashboard</a></li>
 						</ul>
                     </li>
+                <?php }?>
 
+                <?php if($permisos <= 2){ ?>
+                    <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+							<i class="flaticon-381-networking"></i>
+							<span class="nav-text">Administración</span>
+						</a>
+                        <ul aria-expanded="false">
+							<li><a href="./admin">Dashboard</a></li>
+						</ul>
+                    </li>
+                <?php }?>
+                
+                <?php if($permisos <= 6){ ?>
                     <li><a class="has-arrow ai-icon" href="./almacen" aria-expanded="false">
 							<i class="flaticon-381-layer-1"></i>
 							<span class="nav-text">Almacen</span>
@@ -21,16 +35,18 @@
                             <li><a href="./almacen">Dashboard</a></li>
                         </ul>
                     </li>
+                <?php }?>
 
                     <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 							<i class="flaticon-381-database"></i>
 							<span class="nav-text">Catálogos</span>
 						</a>
                         <ul aria-expanded="false">
-                            <li><a href="./usuarios">Catálogo Usuarios</a></li>
+                        <?php if($permisos <= 2){ ?><li><a href="./usuarios">Catálogo Usuarios</a></li><?php }?>
+                        <?php if($permisos <= 6){ ?>
                             <li><a href="./proveedores">Catálogo Proveedores</a></li>
                             <li><a href="./productos">Catálogo Productos</a></li>
-                            <!--<li><a href="./polizaventas">Poliza Ventas</a></li>-->
+                        <?php }?>
                         </ul>
                     </li>
                 </ul>
