@@ -18,6 +18,8 @@ if(!isset($_SESSION['userid'])){
     $auth = new validateAuth();
     $validate = $auth->validate_module($permisos, $route);
 
+    require_once("../auth/en-uncrypt.php");
+
     $path = "./";
     $pathTheme = "./src/";
     require_once("./controller/usuarioController.php");

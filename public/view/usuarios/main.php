@@ -63,7 +63,7 @@
                                                         <input type="text" id="correo" name="correo"
                                                             class="form-control" placeholder="">
                                                         <div class="input-group-append">
-                                                            <span class="input-group-text">@dimasur.com.mx</span>
+                                                            <span class="input-group-text">@arctec.com.mx</span>
                                                         </div>
                                                     </div>
                                                 </div>
@@ -82,7 +82,9 @@
                                                             <option value="selected">Seleccione</option>
                                                             <option value="2">Administrador</option>
                                                             <option value="3">Contador</option>
-                                                            <option value="4">Observador</option>
+                                                            <option value="4">Auxiliar Administrativo</option>
+                                                            <option value="5">Auxiliar Contable</option>
+                                                            <option value="6">Almacenista</option>
                                                         </select>
                                                     </div>
                                                 </div>
@@ -92,7 +94,7 @@
                                     <div class="modal-footer">
                                         <button type="button" class="btn btn-sm btn-danger light"
                                             data-dismiss="modal">Cerrar</button>
-                                        <a href="javascript:void()" id="btnfrmuser"
+                                        <a href="javascript:void()" id="btn-guarda-usuario"
                                             class="btn btn-sm btn-primary text-white">Agregar</a>
                                     </div>
                                 </div>
@@ -115,6 +117,8 @@
                                                     <div class="col-sm-8">
                                                         <input type="text" id="idcontrasenia" name="idcontrasenia" class="form-control"
                                                             value="0">
+                                                        <input type="text" id="idmodo" name="idmodo" class="form-control"
+                                                            value="3">
                                                     </div>
                                                 </div>
                                                 <div class="form-group row">
