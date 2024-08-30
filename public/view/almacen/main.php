@@ -132,7 +132,7 @@
                                     <div class="form-group col-md-3 input-info">
                                             <label>Destino</label>
                                             <select multiple class="form-control" id="destino">
-                                                <option>Casa 47 - Jacaranda</option>
+                                            <option>Casa 47 - Jacaranda</option>
                                                 <option>Casa 48 - Jacaranda</option>
                                                 <option>Casa 49 - Jacaranda</option>
                                                 <option>Casa 50 - Jacaranda</option>

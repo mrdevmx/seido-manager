@@ -1,49 +1,50 @@
 <?php 
-    /*session_start(); 
+    session_start(); 
     if(isset($_SESSION['userid'])){ 
         header('Location: ./ ');
-    }*/
+    }
 ?>
 <!DOCTYPE html>
 <html lang="en" class="h-100">
-
 <head>
 <meta charset="utf-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <title>DATA MANING TOOLS</title>
 <!-- Favicon icon -->
-<link href="<?php echo $pathTheme;?>images/siscontrol_simple_logo.png" rel="icon" type="image/png" sizes="16x16">
+<link rel="icon" sizes="any" type="image/svg+xml" href="<?php echo $pathTheme;?>images/favicon_negro_verde.svg">
 <link href="<?php echo $pathTheme;?>css/style.css" rel="stylesheet">
 <link href="<?php echo $pathTheme;?>vendor/sweetalert2/dist/sweetalert2.min.css" rel="stylesheet">
 </head>
-<body style="height: 100vh !important; background: url('<?php echo $pathTheme;?>images/background_login.jpg') no-repeat fixed bottom; background-size: cover;">
+<style>
+    .swal2-popup .swal2-styled.swal2-confirm {
+        background-color: #1C1C1B !important;
+    }
+</style>
+<body style="height: 100vh !important; background: url('<?php echo $pathTheme;?>images/wallpaper-login.jpg') no-repeat fixed bottom; background-size: cover;backdrop-filter: blur(10px);">
     <div class="authincation h-100">
         <div class="container h-100">
             <div class="row justify-content-center h-100 align-items-center">
-                <div class="col-md-6">
+                <div class="col-md-6" style="max-width: 35%;">
                     <div class="authincation-content">
                         <div class="row no-gutters">
                             <div class="col-xl-12">
                                 <div class="auth-form">
                                     <div class="container">
                                         <div class="row text-center">
-                                            <div class="col-lg-7" style="margin: auto">
-                                                <img class="img-fluid" src="<?php echo $pathTheme;?>images/siscontrol_logo.svg" alt="">
+                                            <div class="col-lg-7" style="margin: auto;padding-bottom: 20px;">
+                                                <img class="img-fluid" style="width: 30%" src="https://firebasestorage.googleapis.com/v0/b/web-page-4e788.appspot.com/o/isotipo-kontrol.png?alt=media&token=519d6cf2-ccc7-4af5-b2da-0b5a5a1d413b" alt="">
                                             </div>
-                                            <!--<div class="col-lg-6">
-                                                <img class="img-fluid" src="./images/svg_deere_logo.svg" alt="">
-                                            </div>-->
                                         </div>
                                     </div>
                                     <form method="POST" class="mt-3">
                                         <div class="form-group">
-                                            <label class="mb-1 text-black"><strong>USUARIO</strong></label>
-                                            <input type="text" id="correo" name="correo" class="form-control" placeholder="SisControl User">
+                                            <label class="mb-1" style="color:#1C1C1B !important;"><strong>USUARIO</strong></label>
+                                            <input type="text" id="correo" name="correo" class="form-control" placeholder="" style="height: 40px !important;">
                                         </div>
                                         <div class="form-group">
-                                            <label class="mb-1 text-black"><strong>CONTRASEÑA</strong></label>
-                                            <input type="password" id="password" name="password" class="form-control" placeholder="··········">
+                                            <label class="mb-1" style="color:#1C1C1B !important;"><strong>CONTRASEÑA</strong></label>
+                                            <input type="password" id="password" name="password" class="form-control" placeholder="" style="height: 40px !important;">
                                         </div>
                                         <!--<div class="form-row d-flex justify-content-between mt-4 mb-2">
                                             <div class="form-group">
@@ -57,7 +58,7 @@
                                             </div>
                                         </div>-->
                                         <div class="text-center mt-5">
-                                            <a type="submit" id="access" name="access" class="btn btn-primary btn-block text-white">Validar</a>
+                                            <a type="submit" id="access" name="access" class="btn btn-success btn-block text-white" style="background-color:#1C1C1B !important;border-color:#1C1C1B !important;">Validar</a>
                                         </div>
                                     </form>
                                     <!--<div class="new-account mt-3">
@@ -89,15 +90,14 @@
     $(document).ready(function(){
             $('#access').click(function(){
              if ( $('#correo').val() != "" && $('#password').val() != "" ){
-                  
+                  var data = 'email=' + $('#correo').val() + '&pass=' + $('#password').val();
                  $.ajax({
                      type: 'POST',
-                     url: './conexion/funciones/login/access.php',
-                     data: 'correo=' + $('#correo').val() + '&password=' + $('#password').val(),
-                      
- //si la sesion se inicia correctamente presentamos el mensaje
+                     url: './login.php',
+                     data: data,
                      success:function(msj){
-                         if ( msj == 1 ){
+                        console.log(msj);
+                         if (msj == true){
                             Swal.fire({
                                 icon: 'success',
                                 title: 'Espere un momento...',
@@ -108,8 +108,6 @@
                             })
 
                          }
-                          
- //caso contrario los datos son incorrectos
                          else{
                             Swal.fire({
                             icon: 'warning',
@@ -119,7 +117,6 @@
                          }
                          $('#timer').fadeOut(300);
                      },
- //si se pierden los datos presentamos error de ejecucion.
                      error:function(jqXHR, textStatus, datos){
                         Swal.fire({
                             icon: 'error',
@@ -142,7 +139,6 @@
           
      });
     });
- 
     </script>
 
 </body>

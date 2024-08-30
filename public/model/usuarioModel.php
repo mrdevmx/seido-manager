@@ -45,7 +45,17 @@ class usuariosModel{
     }
 
     public function getUsuarioById($id){
-		$query=$this->db->query("select * from ".$this->table." where Usu_Id = ".$id);
+		$query=$this->db->query("select
+                                     Usu_Id
+                                    ,Usu_Nombre
+                                    ,Usu_Apelli
+                                    ,Usu_Correo
+                                    ,Usu_Contra
+                                    ,Usu_TipUsu
+                                    ,Usu_Empres
+                                    ,convert(Usu_FecAlt, char(10)) as Usu_FecAlt
+                                    ,Usu_Estatu
+                                from ".$this->table." where Usu_Id = ".$id);
         if ($query->num_rows > 0) {
 		    while($row=$query->fetch_assoc()){
                 $this->usuarios[]=$row;
@@ -75,8 +85,8 @@ class usuariosModel{
                             <svg width="24px" height="24px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"></rect><circle fill="#000000" cx="5" cy="12" r="2"></circle><circle fill="#000000" cx="12" cy="12" r="2"></circle><circle fill="#000000" cx="19" cy="12" r="2"></circle></g></svg>
                         </div>
                         <div class="dropdown-menu dropdown-menu-right">
-                            <a class="dropdown-item" onclick=" return cargardatos({$usuario["Usu_Estatu"]})" href="javascript:void()">Editar</a>
-                            <a class="dropdown-item" onclick=" return cargarid({$usuario["Usu_Estatu"]})" data-toggle="modal" data-target="#modalUsuarioContrasenia" href="javascript:void()">Cambiar Contraseña</a>
+                            <a class="dropdown-item" onclick=" return cargardatos({$usuario["Usu_Id"]})" href="javascript:void()">Editar</a>
+                            <a class="dropdown-item" onclick=" return cargarid({$usuario["Usu_Id"]})" data-toggle="modal" data-target="#modalUsuarioContrasenia" href="javascript:void()">Cambiar Contraseña</a>
                         </div>
                     </div>
                     </td>
@@ -102,6 +112,61 @@ class usuariosModel{
             $i++;
         }
         return $this->selectView;
+    }
+
+    public function saveUsuario($nombre,$apellido,$correo,$contrasena,$tipous){
+        $sql = "insert into ".$this->table." (Usu_Nombre, Usu_Apelli, Usu_Correo, Usu_Contra, Usu_TipUsu, Usu_Empres, Usu_FecAlt, Usu_Estatu) values ";
+        $sql .= "('".$nombre."','".$apellido."','".$correo."@arctec.com.mx','".$contrasena."',".intval($tipous).",1,now(),1);";
+
+        $result = $this->db->query($sql); 
+        
+        if(!$result) {
+            $response = "Error en la inserción: ";
+        }else{
+            $response = ($result) ? true : false;
+        }
+
+        $this->db->close();
+		return $response;	
+    }
+
+    public function updateUsuario($id,$nombre,$apellido,$correo,$tipous){
+
+        $sql = "update ".$this->table."  set  
+                     Usu_Nombre = '".$nombre."'
+                    ,Usu_Apelli = '".$apellido."'
+                    ,Usu_Correo = '".$correo."@arctec.com.mx'
+                    ,Usu_TipUsu = ".intval($tipous)."
+                where Usu_Id = ".$id;
+
+        $result = $this->db->query($sql); 
+
+        if(!$result) {
+            $response = "Error en la inserción: ";
+        }else{
+            $response = ($result) ? true : false;
+        }
+
+        $this->db->close();
+		return $response;	
+    }
+
+    public function updateUsuarioContra($id, $contrasena){
+    
+        $sql = "update ".$this->table."  set
+                    Usu_Contra = '".$contrasena."' 
+                where Usu_Id = ".$id;
+        
+        $result = $this->db->query($sql); 
+
+        if(!$result) {
+            $response = "Error en la inserción: ";
+        }else{
+            $response = ($result) ? true : false;
+        }
+
+        $this->db->close();
+        return $response;
     }
 }
 ?>
