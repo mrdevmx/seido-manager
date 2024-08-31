@@ -5,14 +5,14 @@
             <div class="deznav-scroll">
 				<ul class="metismenu" id="menu">
                 <?php if($permisos == 1){ ?>
-                    <li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
+                     <!--<li><a class="has-arrow ai-icon" href="javascript:void()" aria-expanded="false">
 							<i class="flaticon-381-networking"></i>
 							<span class="nav-text">Dashboard</span>
 						</a>
                         <ul aria-expanded="false">
 							<li><a href="./">Dashboard</a></li>
 						</ul>
-                    </li>
+                    </li>-->
                 <?php }?>
 
                 <?php if($permisos <= 2){ ?>

@@ -1,7 +1,7 @@
 <?php
 session_start();
 if(!isset($_SESSION['userid'])){
-    header('Location: ./login.php');
+    header('Location: ./login');
 }else{
     $userid = $_SESSION['userid'];
     $username = $_SESSION['username'];
@@ -16,12 +16,15 @@ if(!isset($_SESSION['userid'])){
     $route = explode("/", $_SERVER['REQUEST_URI']);
     require_once("../auth/validate-permissions.php");
     $auth = new validateAuth();
-    $validate = $auth->validate_module($permisos, $route);
+    $validate = $auth->validate_route($permisos, $route[2]);
 
-    require_once("../auth/en-uncrypt.php");
-
-    $path = "./";
-    $pathTheme = "./src/";
-    require_once("./controller/usuarioController.php");
+    if($validate){
+        require_once("../auth/en-uncrypt.php");
+        $path = "./";
+        $pathTheme = "./src/";
+        require_once("./controller/usuarioController.php");
+    }else{
+        header('Location: ./');
+    }
 }
 ?>
