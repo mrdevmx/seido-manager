@@ -6,9 +6,10 @@ if(!isset($_SESSION['userid'])){
     $userid = $_SESSION['userid'];
     $username = $_SESSION['username'];
     $shortname = $_SESSION['shortname'];
-	  $shortlastname = $_SESSION['shortlastname'];
+	$shortlastname = $_SESSION['shortlastname'];
     $permisos = $_SESSION['tipous'];
     $company = $_SESSION['company'];
+    $pathprincipal = $_SESSION['path'];
     
     require_once('../vendor/autoload.php');
     require_once("../db/db.php");
@@ -23,7 +24,7 @@ if(!isset($_SESSION['userid'])){
         $pathTheme = "./src/";
         require_once("./controller/dashboard.php");
     }else{
-        header('Location: ./');
+        header('Location: ./'.$pathprincipal);
     }
 }
 ?>
