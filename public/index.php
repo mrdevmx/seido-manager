@@ -9,29 +9,9 @@ if(!isset($_SESSION['userid'])){
 	$shortlastname = $_SESSION['shortlastname'];
     $permisos = $_SESSION['tipous'];
     $company = $_SESSION['company'];
+    $pathprincipal = $_SESSION['path'];
     
-    switch ($permisos) {
-        case 2:
-          header('Location: ./admin');
-          break;
-        case 3:
-          header('Location: ./admin');
-          break;
-        case 4:
-          header('Location: ./admin');
-          break;
-        case 5:
-          header('Location: ./admin');
-          break;
-        case 6:
-          header('Location: ./almacen');
-          break;  
-        default:
-         header('Location: ./admin');
-    }
-
-    //$path = "./";
-    //$pathTheme = "./src/";
-    //require_once("./controller/dashboard.php");
+    
+    header('Location: ./'.$pathprincipal);
 }
 ?>

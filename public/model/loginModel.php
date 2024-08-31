@@ -54,8 +54,12 @@ class loginModel{
                     ,Usu_Correo
                     ,Usu_Contra
                     ,Usu_TipUsu AS tipous
-                    ,Usu_Empres 
-                from ".$this->table." where Usu_Correo='".$email."@arctec.com.mx'";
+                    ,Usu_Empres
+                    ,Cru_Ruta 
+                from ".$this->table." 
+                inner join CCPERUSU on Peu_Id = Usu_TipUsu
+                inner join CCCATRUT on Peu_IdRuta = Cru_Id
+                where Usu_Correo='".$email."@arctec.com.mx'";
 
 		$query=$this->db->query($sql);
         if ($query->num_rows > 0) {
@@ -78,7 +82,8 @@ class loginModel{
                     $_SESSION['shortlastname']   = $shortLastname;
                     $_SESSION['usermail']   = $this->usuarios[0]['Usu_Correo'];
                     $_SESSION['tipous']   = $this->usuarios[0]['tipous'];
-                    $_SESSION['company']   = $this->usuarios[0]['Usu_Empres '];
+                    $_SESSION['company']   = $this->usuarios[0]['Usu_Empres'];
+                    $_SESSION['path']   = $this->usuarios[0]['Cru_Ruta'];
                     $return = true;
                 } else {
                     $return = 'Usuario o contraseña incorrecto';
