@@ -1,25 +1,37 @@
 <?php
 session_start();
 if(!isset($_SESSION['userid'])){
-    header('Location: ./login.php');
+    header('Location: ./login');
 }else{
     $userid = $_SESSION['userid'];
     $username = $_SESSION['username'];
     $shortname = $_SESSION['shortname'];
-	  $shortlastname = $_SESSION['shortlastname'];
+	$shortlastname = $_SESSION['shortlastname'];
     $permisos = $_SESSION['tipous'];
     $company = $_SESSION['company'];
     
-    require_once('../vendor/autoload.php');
-    require_once("../db/db.php");
-    
-    $route = explode("/", $_SERVER['REQUEST_URI']);
-    require_once("../auth/validate-permissions.php");
-    $auth = new validateAuth();
-    $validate = $auth->validate_module($permisos, $route);
+    switch ($permisos) {
+        case 2:
+          header('Location: ./admin');
+          break;
+        case 3:
+          header('Location: ./admin');
+          break;
+        case 4:
+          header('Location: ./admin');
+          break;
+        case 5:
+          header('Location: ./admin');
+          break;
+        case 6:
+          header('Location: ./almacen');
+          break;  
+        default:
+         header('Location: ./admin');
+    }
 
-    $path = "./";
-    $pathTheme = "./src/";
-    require_once("./controller/dashboard.php");
+    //$path = "./";
+    //$pathTheme = "./src/";
+    //require_once("./controller/dashboard.php");
 }
 ?>

@@ -39,24 +39,25 @@ class validateAuth{
 
     public function validate_module($permisos, $route){
         $validate = $this->validate_route($permisos, $route[2]);
+        var_dump($validate);
         switch ($permisos) {
             case 2:
-              $validate == true ? '' : header('Location: ./admin');
+              $validate == true ? exit() : header('Location: ./admin');
               break;
             case 3:
-              $validate == true ? '' : header('Location: ./admin');
+              $validate == true ? exit() : header('Location: ./admin');
               break;
             case 4:
-              $validate == true ? '' : header('Location: ./admin');
+              $validate == true ? exit() : header('Location: ./admin');
               break;
             case 5:
-              $validate == true ? '' : header('Location: ./admin');
+              $validate == true ? exit() : header('Location: ./admin');
               break;
             case 6:
-              $validate == true ? '' : header('Location: ./almacen');
+              $validate == true ? exit() : header('Location: ./almacen');
               break;  
             default:
-            $validate == true ? '' : '';
+            $validate == true ? exit() : header('Location: ./admin');
         }
         //return $module;
     }
