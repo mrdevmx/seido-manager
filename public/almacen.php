@@ -18,7 +18,7 @@ if(!isset($_SESSION['userid'])){
     require_once("../auth/validate-permissions.php");
     $auth = new validateAuth();
     $validate = $auth->validate_route($permisos, $route[2]);
-
+    var_dump($validate);
     if($validate){
         $path = "./";
         $pathTheme = "./src/";
