@@ -10,7 +10,11 @@
 <script>
     $(document).ready(function(){
         var path = '<?php echo $pathprincipal;?>';
-        window.location.href = "./<?php echo $pathprincipal;?>";
+        if( path != ''){
+            window.location.href = "./"+path;
+        }else{
+            console.log(path);
+        }
     });
 </script>
 </html>
