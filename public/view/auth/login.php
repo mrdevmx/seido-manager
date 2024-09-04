@@ -101,7 +101,7 @@
         if('<?php echo $pathprincipal;?>' != ''){
             window.location.href = "./<?php echo $pathprincipal;?>";
         }else{
-            console.log('<?php echo $pathprincipal;?>');
+            console.log('vacio');
         }
     });
 

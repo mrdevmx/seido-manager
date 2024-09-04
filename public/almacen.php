@@ -15,6 +15,7 @@ if(!isset($_SESSION['userid'])){
     require_once("../db/db.php");
 
     $route = explode("/", $_SERVER['REQUEST_URI']);
+    var_dump($route[2]);
     require_once("../auth/validate-permissions.php");
     $auth = new validateAuth();
     $validate = $auth->validate_route($permisos, $route[2]);
