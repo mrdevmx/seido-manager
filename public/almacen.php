@@ -17,13 +17,13 @@ if(!isset($_SESSION['userid'])){
     require_once("../auth/validate-permissions.php");
     $auth = new validateAuth();
     $validate = $auth->validate_route($permisos, $_SERVER["PHP_SELF"]);
-    var_dump($validate);
+
     if($validate){
         $path = "./";
         $pathTheme = "./src/";
         require_once("./controller/almacenController.php");
     }else{
-        //require_once("./controller/sessionValidateController.php");
+        require_once("./controller/sessionValidateController.php");
     }
 }
 ?>
