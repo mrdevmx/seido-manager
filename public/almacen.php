@@ -15,7 +15,16 @@ if(!isset($_SESSION['userid'])){
     require_once("../db/db.php");
 
     $route = explode("/", $_SERVER['REQUEST_URI']);
-    var_dump($route);
+    $string = $_SERVER["PHP_SELF"];
+    var_dump($string);
+    $posicion  = strpos($_SERVER["PHP_SELF"], 'public');
+    var_dump($posicion.'<br/>');
+    $parte1 = substr($string,$posicion);
+    var_dump($parte1.'<br/>');
+    $parte2 = str_replace("public/","",$parte1);
+    var_dump($parte2.'<br/>');
+    $parte3 = str_replace(".php","",$parte2);
+    var_dump($parte3.'<br/>');
     require_once("../auth/validate-permissions.php");
     $auth = new validateAuth();
     $validate = $auth->validate_route($permisos, $route[2]);
