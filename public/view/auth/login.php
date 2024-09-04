@@ -98,10 +98,10 @@
     <script>
     $(document).ready(function(){
         var path = '<?php echo $pathprincipal;?>';
-        if( path != ''){
-            window.location.href = "./"+path;
+        if('<?php echo $pathprincipal;?>' != ''){
+            window.location.href = "./<?php echo $pathprincipal;?>";
         }else{
-            console.log(path);
+            console.log('<?php echo $pathprincipal;?>');
         }
     });
 
