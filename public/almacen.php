@@ -15,7 +15,7 @@ if(!isset($_SESSION['userid'])){
     require_once("../db/db.php");
 
     $route = explode("/", $_SERVER['REQUEST_URI']);
-    var_dump($route[2]);
+    var_dump($route);
     require_once("../auth/validate-permissions.php");
     $auth = new validateAuth();
     $validate = $auth->validate_route($permisos, $route[2]);
@@ -25,7 +25,7 @@ if(!isset($_SESSION['userid'])){
         $pathTheme = "./src/";
         require_once("./controller/almacenController.php");
     }else{
-        require_once("./controller/sessionValidateController.php");
+        //require_once("./controller/sessionValidateController.php");
     }
 }
 ?>
