@@ -10,7 +10,7 @@
         $pathprincipal = $_SESSION['path'];
     
     
-        header('Location: ./'.$pathprincipal);
+        //header('Location: ./'.$pathprincipal);
     }
 ?>
 <!DOCTYPE html>
@@ -97,7 +97,15 @@
     <script src="<?php echo $pathTheme;?>js/plugins-init/sweetalert.init.js"></script>
     <script>
     $(document).ready(function(){
-            $('#access').click(function(){
+        var path = '<?php echo $pathprincipal;?>';
+        if( path != ''){
+            window.location.href = "./"+path;
+        }else{
+            console.log(path);
+        }
+    });
+
+    $('#access').click(function(){
              if ( $('#correo').val() != "" && $('#password').val() != "" ){
                   var data = 'email=' + $('#correo').val() + '&pass=' + $('#password').val();
                  $.ajax({
@@ -113,7 +121,7 @@
                                 showConfirmButton: false,
                                 timer: 1500
                             }).then((result) => {
-                                window.location.href = "./";
+                                location.reload()
                             })
 
                          }
@@ -147,7 +155,6 @@
          return false;
           
      });
-    });
     </script>
 
 </body>

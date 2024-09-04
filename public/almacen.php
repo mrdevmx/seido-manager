@@ -24,7 +24,7 @@ if(!isset($_SESSION['userid'])){
         $pathTheme = "./src/";
         require_once("./controller/almacenController.php");
     }else{
-        header('Location: ./'.$pathprincipal);
+        require_once("./controller/sessionValidateController.php");
     }
 }
 ?>
