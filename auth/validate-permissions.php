@@ -21,7 +21,12 @@ class validateAuth{
     }
 
     public function validate_route($permiso, $route){
-      $sql = "select Cru_IdPermi from ".$this->rutas." where Cru_Ruta = '".$route."'";
+      $posicion  = strpos($route, 'public');
+      $parte1 = substr($route,$posicion);
+      $parte2 = str_replace("public/","",$parte1);
+      $ruta = str_replace(".php","",$parte2);
+
+      $sql = "select Cru_IdPermi from ".$this->rutas." where Cru_Ruta = '".$ruta."'";
       $query=$this->db->query($sql);
         if ($query->num_rows > 0) {
 		    while($row=$query->fetch_assoc()){
