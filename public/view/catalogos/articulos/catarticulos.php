@@ -31,7 +31,7 @@ $pathTemplate = "./";
         'proveedor': proveedor,
     };
         console.log(postData);
-    var formURL = "./catarticulos";
+    var formURL = "./productos";
     $.ajax({
         url: formURL,
         type: "POST",
@@ -46,7 +46,7 @@ $pathTemplate = "./";
                 showConfirmButton: false,
                 timer: 2000
             }).then((result) => {
-                window.location.href = "./catarticulos";
+                window.location.href = "./productos";
             })
 
         },
@@ -62,7 +62,7 @@ $pathTemplate = "./";
 });
 
 function cargardatos(id){
-    var formURL = "./catarticulos";
+    var formURL = "./productos";
     var postData = {
         'modo': 2,
         'id': id,
