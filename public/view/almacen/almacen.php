@@ -265,7 +265,7 @@ $("#agregarsalida").click(function() {
     var provid = $("#provid").val();
     var productSalidas = {
         url: function(phrase) {
-            return "./view/almacen/autocompleteSalidas.php?phrase=" + phrase + "&format=json";
+            return "./autocomplete/autocompleteSalidas.php?phrase=" + phrase + "&format=json";
         },
         getValue: "producto",
         list: {
