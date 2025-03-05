@@ -6,14 +6,14 @@
                 <p class="mb-0">Dashboard</p>
             </div>
             <div class="dropdown custom-dropdown ml-3">
-                <button type="button" class="btn btn-primary light d-flex align-items-center svg-btn"
+                <button type="button" class="btn btn-primary d-flex align-items-center svg-btn"
                     data-toggle="modal" data-target="#modalEntrada">
                     <i class="la la-mail-forward"></i>
                     <span class="fs-16 ml-3">Registrar entrada</span>
                 </button>
             </div>
             <div class="dropdown custom-dropdown ml-3">
-                <button type="button" class="btn btn-primary light d-flex align-items-center svg-btn"
+                <button type="button" class="btn btn-primary d-flex align-items-center svg-btn"
                     data-toggle="modal" data-target="#modalSalida">
                     <i class="la la-mail-reply"></i>
                     <span class="fs-16 ml-3">Registrar salida</span>

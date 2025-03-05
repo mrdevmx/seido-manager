@@ -29,18 +29,8 @@
     .swal2-popup .swal2-styled.swal2-confirm {
         background-color: #1C1C1B !important;
     }
-    #myVideo {
-  position: fixed;
-  right: 0;
-  bottom: 0;
-  min-width: 100%;
-  min-height: 100%;
-}
 </style>
 <body style="height: 100vh !important; background: #1C1C1B ;">
-    <video autoplay muted loop id="myVideo">
-      <source src="https://firebasestorage.googleapis.com/v0/b/web-page-4e788.appspot.com/o/electronic-circuit-board.3840x2160.mp4?alt=media&token=ff79169a-935c-44ab-b5c2-f211340953d8" type="video/mp4">
-    </video>
     <div class="authincation h-100">
         <div class="container h-100">
             <div class="row justify-content-center h-100 align-items-center">
