@@ -1,10 +1,10 @@
 <?php 
 
 
-  define('DB_HOST', '213.162.197.2');
-  define('DB_USER', 'uhdtgnaj_dmtoolsadm');
-  define('DB_PASS', '926145CaPry$*@');
-  define('DB_DABA', 'uhdtgnaj_DATMANTOOLS');  
+  define('DB_HOST', $_ENV['DB_HOST']);
+  define('DB_USER', $_ENV['DB_USER']);
+  define('DB_PASS', $_ENV['DB_PASS']);
+  define('DB_DABA', $_ENV['DB_DABA']);
 
   if (isset($_GET['phrase'])){
     $return_arr = array();

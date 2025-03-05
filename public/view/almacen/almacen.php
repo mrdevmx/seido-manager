@@ -64,7 +64,7 @@ $("#agregar").click(function() {
     var provid = $("#provid").val();
     var product = {
         url: function(phrase) {
-            return "./view/almacen/autocompleteProduct.php?phrase=" + phrase + "&provid=" + provid +
+            return "./autocomplete/autocompleteProduct.php?phrase=" + phrase + "&provid=" + provid +
                 "&format=json";
         },
         getValue: "producto",
@@ -110,7 +110,7 @@ $("#agregar").click(function() {
 
 var prov = {
     url: function(phrase) {
-        return "./view/almacen/autocompleteProv.php?phrase=" + phrase + "&format=json";
+        return "./autocomplete/autocompleteProv.php?phrase=" + phrase + "&format=json";
     },
     getValue: "provname",
     list: {
@@ -265,7 +265,7 @@ $("#agregarsalida").click(function() {
     var provid = $("#provid").val();
     var productSalidas = {
         url: function(phrase) {
-            return "./view/almacen/autocompleteSalidas.php?phrase=" + phrase + "&format=json";
+            return "./autocomplete/autocompleteSalidas.php?phrase=" + phrase + "&format=json";
         },
         getValue: "producto",
         list: {
