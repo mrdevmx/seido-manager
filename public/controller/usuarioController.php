@@ -7,7 +7,7 @@ if(isset($_POST["modo"])){
     switch ($_POST["modo"]) {
         case 0:
             $saveUsuario = new usuariosModel();
-            $response = $saveUsuario->saveUsuario($_POST["nombre"],$_POST["apellido"],$correo,encrypt($_POST["contrasena"]),$_POST["tipous"]);
+            $response = $saveUsuario->saveUsuario($_POST["nombre"],$_POST["apellido"],$correo,$_POST["contrasena"],$_POST["tipous"]);
           break;
         case 1:
             $updateUsuario = new usuariosModel();
