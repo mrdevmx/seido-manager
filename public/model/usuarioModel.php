@@ -16,10 +16,12 @@ class usuariosModel{
     private $usuarios;
     private $tableView;
     private $selectView;
+    private $key;
  
     public function __construct(){
         $this->db=Conectar::conexion($this->typeConnection);
         $this->usuarios=array();
+        $this->key = $key = $_ENV['KEY_SECRET'];
     }
     public function getUsuarios(){
         $query=$this->db->query("select
@@ -116,7 +118,7 @@ class usuariosModel{
 
     public function saveUsuario($nombre,$apellido,$correo,$contrasena,$tipous){
         $sql = "insert into ".$this->table." (Usu_Nombre, Usu_Apelli, Usu_Correo, Usu_Contra, Usu_TipUsu, Usu_Empres, Usu_FecAlt, Usu_Estatu) values ";
-        $sql .= "('".$nombre."','".$apellido."','".$correo."@arctec.com.mx','".$contrasena."',".intval($tipous).",1,now(),1);";
+        $sql .= "('".$nombre."','".$apellido."','".$correo."@arctec.com.mx','".encrypt($contrasena, $key)."',".intval($tipous).",1,now(),1);";
 
         $result = $this->db->query($sql); 
         

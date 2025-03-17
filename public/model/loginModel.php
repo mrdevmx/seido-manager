@@ -14,10 +14,12 @@ class loginModel{
     private $db;
     private $typeConnection = 1; // 1 controlcentral
     private $usuarios;
+    private $key;
  
     public function __construct(){
         $this->db=Conectar::conexion($this->typeConnection);
         $this->usuarios=array();
+        $this->key = $key = $_ENV['KEY_SECRET'];
     }
     public function getUsuarios(){
         $query=$this->db->query("select * from ".$this -> table);
@@ -66,7 +68,7 @@ class loginModel{
 		    while($row=$query->fetch_assoc()){
                 $this->usuarios[]=$row;
                 $passEncrypt = $this->usuarios[0]['Usu_Contra'];
-                $passUncrypt = uncrypt($passEncrypt);
+                $passUncrypt = uncrypt($passEncrypt, $this->key);
 
                 if (password_verify($pass, $passUncrypt)) {
                     $sn = explode(" ", $this->usuarios[0]['Usu_Nombre']);
