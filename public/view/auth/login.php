@@ -10,7 +10,7 @@
         $pathprincipal = $_SESSION['path'];
     
     
-        header('Location: ./'.$pathprincipal);
+        //header('Location: ./'.$pathprincipal);
     }
 ?>
 <!DOCTYPE html>
@@ -30,7 +30,7 @@
         background-color: #1C1C1B !important;
     }
 </style>
-<body style="height: 100vh !important; background: #1C1C1B ;">
+<body style="height: 100vh !important; background: #1C1C1B">
     <div class="authincation h-100">
         <div class="container h-100">
             <div class="row justify-content-center h-100 align-items-center">
@@ -96,44 +96,65 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.4.17/sweetalert2.all.min.js"></script>
     <script src="<?php echo $pathTheme;?>js/plugins-init/sweetalert.init.js"></script>
     <script>
-    $('#access').click(function(){
-        let email = $('#correo').val();
-        let password = $('#password').val();
+    $(document).ready(function(){
         var path = '<?php echo $pathprincipal;?>';
-
-        if (email && password) {
-            $.ajax({
-                type: 'POST',
-                url: './login.php',
-                data: { email: email, pass: password },
-                success: function(response) {
-                    Swal.fire({
-                        icon: response ? 'success' : 'warning',
-                        title: response ? 'Espere un momento...' : 'Oops...',
-                        text: response ? '' : response,
-                        showConfirmButton: !response,
-                        timer: response ? 1500 : undefined
-                    }).then(() => {
-                        if (response) window.location.href = path;
-                    });
-                },
-                error: function(jqXHR, textStatus, errorThrown) {
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Oops...',
-                        text: errorThrown,
-                    });
-                }
-            });
-        } else {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Oops...',
-                text: 'Campos vacios.',
-            });
+        if('<?php echo $pathprincipal;?>' != ''){
+            window.location.href = "./<?php echo $pathprincipal;?>";
+        }else{
+            console.log('vacio');
         }
-        return false;
     });
+
+    $('#access').click(function(){
+             if ( $('#correo').val() != "" && $('#password').val() != "" ){
+                  var data = 'email=' + $('#correo').val() + '&pass=' + $('#password').val();
+                 $.ajax({
+                     type: 'POST',
+                     url: './login.php',
+                     data: data,
+                     success:function(msj){
+                        console.log(msj);
+                         if (msj == true){
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Espere un momento...',
+                                showConfirmButton: false,
+                                timer: 1500
+                            }).then((result) => {
+                                location.reload()
+                            })
+
+                         }
+                         else{
+                            Swal.fire({
+                            icon: 'warning',
+                            title: 'Oops...',
+                            text: msj,
+                        })
+                         }
+                         $('#timer').fadeOut(300);
+                     },
+                     error:function(jqXHR, textStatus, datos){
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Oops...',
+                            text: datos,
+                        })
+                     }
+                 });
+                          
+ 
+    }else{
+        Swal.fire({
+            icon: 'warning',
+            title: 'Oops...',
+            text: 'Campos vacios.',
+                        })
+             }
+          
+         return false;
+          
+     });
     </script>
 
 </body>
