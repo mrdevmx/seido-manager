@@ -92,7 +92,7 @@ class loginModel{
                 }
             }
         }else{
-            $return = 'Usuario o contraseña incorrecto';
+            $return = $email;
         }
 
 		$this->db->close();
