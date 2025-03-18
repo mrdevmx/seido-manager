@@ -88,11 +88,11 @@ class loginModel{
                     $_SESSION['path']   = $this->usuarios[0]['Cru_Ruta'];
                     $return = true;
                 } else {
-                    $return = 'contraseña incorrecto';
+                    $return = $passUncrypt;
                 }
             }
         }else{
-            $return = $email;
+            $return = 'Usuario o contraseña incorrecto';
         }
 
 		$this->db->close();
