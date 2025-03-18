@@ -88,7 +88,7 @@ class loginModel{
                     $_SESSION['path']   = $this->usuarios[0]['Cru_Ruta'];
                     $return = true;
                 } else {
-                    $return = $passUncrypt;
+                    $return = 'Usuario o contraseña incorrecto';
                 }
             }
         }else{
