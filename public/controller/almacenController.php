@@ -2,9 +2,11 @@
 //Llamada al modelo
 require_once($path."model/almacenModel.php");
 require_once($path."model/usuarioModel.php");
+require_once($path."model/andadoresModel.php");
 $usuario = new usuariosModel();
 $movResumen = new almacenModel();
 $almacen = new almacenModel();
+$andadores = new andadoresModel();
 
 if(isset($_POST["modo"])){
     if($_POST["modo"] == 1){
@@ -20,8 +22,9 @@ if(isset($_POST["modo"])){
     $timelineMovimientosResumen=$movResumen->timelineMovimientosResumen();
     $tableKardex=$almacen->getKardexTable();
     $usuarioSelect=$usuario->getUsuarioSelect();
+    $andadorSelect=$andadores->getCasAndSelect();
     //Llamada a la vista
 require_once($path."view/almacen/almacen.php");
-};
+}
 
 ?>
