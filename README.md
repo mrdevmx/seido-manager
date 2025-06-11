@@ -49,6 +49,7 @@ mv .env_tmp .env
 # Configura la base de datos con los archivos de ejemplo o la guía incluida
 
 # Ajusta los parámetros de conexión en los archivos de configuración si es necesario
+```
 
 > ⚠️ **Este proyecto se encuentra en desarrollo activo.**  
 > La documentación de instalación puede cambiar conforme evolucione el sistema.
