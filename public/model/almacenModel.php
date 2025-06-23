@@ -95,6 +95,7 @@ class almacenModel{
                 EOT;
             }else{
                 $destino ='';
+                $badge = '';
                 foreach(json_decode($movimiento["destino"]) as $index => $destino){
                     $badge .='<span class="badge badge-rounded light badge-info col">'.$destino.'</span>';
                 }
