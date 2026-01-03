@@ -23,7 +23,7 @@ if (!isset($_SESSION['username']) && !isset($_SESSION['userid'])){
 
         $passEncrypt = $user['contrasena'];
 
-        $passUncrypt = uncrypt($passEncrypt);
+        $passUncrypt = uncrypt($passEncrypt, $_ENV['KEY_SECRET']);
 
         if (password_verify($pass, $passUncrypt)) {
             $sn = explode(" ", $user['nombre']);

@@ -18,8 +18,9 @@ if(isset($_POST["modo"])){
             echo $response = json_encode($getUsuario->getUsuarioById($_POST["id"]));
           break;
         case 3:
+          $key = $_ENV['KEY_SECRET'];
             $updateUsuarioContra = new usuariosModel();
-            echo $response = $updateUsuarioContra->updateUsuarioContra($_POST["idcontrasenia"],encrypt($_POST["contrasenaid"]));
+            echo $response = $updateUsuarioContra->updateUsuarioContra($_POST["idcontrasenia"], encrypt($_POST["contrasenaid"], $key));
           break;
         default:
             $response = false;
