@@ -118,7 +118,7 @@ class usuariosModel{
 
     public function saveUsuario($nombre,$apellido,$correo,$contrasena,$tipous){
         $sql = "insert into ".$this->table." (Usu_Nombre, Usu_Apelli, Usu_Correo, Usu_Contra, Usu_TipUsu, Usu_Empres, Usu_FecAlt, Usu_Estatu) values ";
-        $sql .= "('".$nombre."','".$apellido."','".$correo."@arctec.com.mx','".encrypt($contrasena, $key)."',".intval($tipous).",1,now(),1);";
+        $sql .= "('".$nombre."','".$apellido."','".$correo."@arctec.com.mx','".encrypt($contrasena, $this->key)."',".intval($tipous).",1,now(),1);";
 
         $result = $this->db->query($sql); 
         
@@ -158,7 +158,7 @@ class usuariosModel{
         $sql = "update ".$this->table."  set
                     Usu_Contra = '".$contrasena."' 
                 where Usu_Id = ".$id;
-        
+
         $result = $this->db->query($sql); 
 
         if(!$result) {
