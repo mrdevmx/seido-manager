@@ -48,15 +48,16 @@
                                     <div class="form-group col-md-3 input-info">
                                         <label>Fecha Entrada</label>
                                         <input type="date" id="fecentra" name="fecentra" class="form-control"
-                                            placeholder="">
+                                            placeholder="" onchange="onoff()">
                                     </div>
                                     <div class="form-group col-md-2 input-info">
                                         <label>No. Requisición</label>
-                                        <input type="text" id="requi" name="requi" class="form-control">
+                                        <input type="text" id="requi" name="requi" class="form-control" onchange="onoff()">
                                     </div>
                                     <div class="form-group col-sm-3 input-info">
                                         <label>Recibe</label>
-                                        <select class="form-control" id="recibe" name ="recibe">
+                                        <select class="form-control" id="recibe" name ="recibe" onchange="onoff()">
+                                            <option value="">-- Selecciona un usuario --</option>
                                             <?php print $usuarioSelect; ?>
                                         </select>
                                     </div>

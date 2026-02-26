@@ -48,17 +48,16 @@ $("#agregar").click(function() {
                     <div class="input-group-prepend">\n\
                         <div class="input-group-text"><i class="la la-dollar"></i></div>\n\
                     </div>\n\
-                    <input type="text" id="pu_' + index + '" name="pu[]" onkeyup="calcularMult(' + index + ')" class="form-control">\n\
+                    <input type="text" id="pu_' + index + '" name="pu[]" onkeyup="calcularMult(' + index + ')" onblur="formatCurrency(this)" class="form-control currency-input">\n\
                  </div>\n\
                  <div class="form-group col-md-2 input-group input-info">\n\
                     <div class="input-group-prepend">\n\
                         <div class="input-group-text"><i class="la la-dollar"></i></div>\n\
                     </div>\n\
-                    <input type="number" id="total_' + index + '" name="total[]" class="form-control" disabled>\n\
+                    <input type="text" id="total_' + index + '" name="total[]" class="form-control currency-input" disabled>\n\
                  </div>\n\
                  <button type="button" class="remove_btn btn btn-danger btn-xs" style="margin: auto;"><i class="fa fa-close"></i></button>\n\
             </div>';
-
     $("#frmregent").append(add);
 
     var provid = $("#provid").val();
@@ -147,9 +146,13 @@ var prov = {
 $("#provname").easyAutocomplete(prov);
 
 function onoff() {
-    if ($("#provname").val() != '') {
+    var provname = $("#provname").val();
+    var fecentra = $("#fecentra").val();
+    var requi = $("#requi").val();
+    var recibe = $("#recibe").val();
+    
+    if (provname != '' && fecentra != '' && requi != '' && recibe != '') {
         $("#agregar").removeAttr('disabled');
-        $('.remove').remove();
     } else {
         $("#agregar").prop("disabled", true);
         $('.remove').remove();
@@ -158,12 +161,25 @@ function onoff() {
 }
 
 function calcularMult(idx) {
-    $("#total_" + idx).val($("#pu_" + idx).val() * $("#cantidad_" + idx).val());
+    var pu = parseFloat($("#pu_" + idx).val().replace(/[^0-9.-]+/g,'')) || 0;
+    var cantidad = parseFloat($("#cantidad_" + idx).val()) || 0;
+    var total = pu * cantidad;
+    $("#total_" + idx).val(total > 0 ? total.toLocaleString('es-MX', {minimumFractionDigits: 2, maximumFractionDigits: 2}) : '');
     /*var sum = 0;
     $("input[id^='total_']").each(function() {
       sum += Number($(this).val());
     });        
       $("#total").val(sum); */
+}
+
+function formatCurrency(input) {
+    let value = input.value.replace(/[^0-9.-]/g, '');
+    if (value) {
+        value = parseFloat(value);
+        if (!isNaN(value)) {
+            input.value = value.toLocaleString('es-MX', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        }
+    }
 }
 
 

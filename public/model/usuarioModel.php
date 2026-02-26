@@ -102,9 +102,6 @@ class usuariosModel{
     public function getUsuarioSelect(){
         $usuarios=$this->getUsuarios();
         $i=1;
-        $this->selectView.= <<< EOT
-                    <option value="selected">Nothing selected</option>
-                EOT;
         foreach($usuarios as $usuario){
             if($usuario['Usu_TipUsu'] > 2){
                 $this->selectView.= <<< EOT
