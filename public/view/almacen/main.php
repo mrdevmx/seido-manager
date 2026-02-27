@@ -80,9 +80,42 @@
                                     </div>
                                 </div>
                             </form>
-                            <div class="container-fluid">
-                                <button type="button" class="btn btn-primary btn-sm" id="agregar" disabled>Agregar
-                                    Producto <span class="btn-icon-right"><i class="fa fa-plus"></i></span></button>
+                            <div class="form-row align-items-end" style="margin-top:8px;">
+                                <div class="form-group col-md-3">
+                                    <button type="button" class="btn btn-primary" id="agregar" disabled style="height:38px; padding:6px 12px;">Agregar
+                                        Producto <span class="btn-icon-right"><i class="fa fa-plus"></i></span></button>
+                                </div>
+                                <div class="form-group col-md-9">
+                                    <div class="form-row">
+                                        <div class="form-group col-md-4 mb-0">
+                                            <label class="mb-1">Subtotal</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text"><i class="la la-dollar"></i></div>
+                                                </div>
+                                                <input type="text" id="subtotal" class="form-control" readonly value="0.00">
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-4 mb-0">
+                                            <label class="mb-1">IVA (16%)</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text"><i class="la la-dollar"></i></div>
+                                                </div>
+                                                <input type="text" id="iva" class="form-control" readonly value="0.00">
+                                            </div>
+                                        </div>
+                                        <div class="form-group col-md-4 mb-0">
+                                            <label class="mb-1">Total</label>
+                                            <div class="input-group">
+                                                <div class="input-group-prepend">
+                                                    <div class="input-group-text"><i class="la la-dollar"></i></div>
+                                                </div>
+                                                <input type="text" id="total" class="form-control" readonly value="0.00">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>

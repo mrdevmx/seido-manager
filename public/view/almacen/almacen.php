@@ -18,6 +18,7 @@
 $(document).ready(function() {
     $(document).on("click", ".remove .remove_btn", function() {
         $(this).parent('.remove').remove();
+        actualizarTotales();
     });
     $(document).on("click", ".removes .remove_btn", function() {
         $(this).parent('.removes').remove();
@@ -104,6 +105,7 @@ $("#agregar").click(function() {
         }
     };
     $("#producto_" + index).easyAutocomplete(product);
+    actualizarTotales();
 });
 
 
@@ -157,6 +159,7 @@ function onoff() {
         $("#agregar").prop("disabled", true);
         $('.remove').remove();
         $("#provid").val('');
+        actualizarTotales();
     }
 }
 
@@ -165,11 +168,22 @@ function calcularMult(idx) {
     var cantidad = parseFloat($("#cantidad_" + idx).val()) || 0;
     var total = pu * cantidad;
     $("#total_" + idx).val(total > 0 ? total.toLocaleString('es-MX', {minimumFractionDigits: 2, maximumFractionDigits: 2}) : '');
-    /*var sum = 0;
+    actualizarTotales();
+}
+
+function actualizarTotales() {
+    var subtotal = 0;
     $("input[id^='total_']").each(function() {
-      sum += Number($(this).val());
-    });        
-      $("#total").val(sum); */
+        var valor = $(this).val().replace(/[^0-9.-]+/g,'');
+        subtotal += parseFloat(valor) || 0;
+    });
+    
+    var iva = subtotal * 0.16;
+    var total = subtotal + iva;
+    
+    $("#subtotal").val(subtotal.toLocaleString('es-MX', {minimumFractionDigits: 2, maximumFractionDigits: 2}));
+    $("#iva").val(iva.toLocaleString('es-MX', {minimumFractionDigits: 2, maximumFractionDigits: 2}));
+    $("#total").val(total.toLocaleString('es-MX', {minimumFractionDigits: 2, maximumFractionDigits: 2}));
 }
 
 function formatCurrency(input) {
