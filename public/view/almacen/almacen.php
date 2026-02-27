@@ -17,11 +17,12 @@
 <script>
 $(document).ready(function() {
     $(document).on("click", ".remove .remove_btn", function() {
-        $(this).parent('.remove').remove();
+        // use closest to find the ancestor row even if wrapped by additional divs
+        $(this).closest('.remove').remove();
         actualizarTotales();
     });
     $(document).on("click", ".removes .remove_btn", function() {
-        $(this).parent('.removes').remove();
+        $(this).closest('.removes').remove();
     });
     /*$(document).on("keypress", "#div_prov #prov", function (e) {
           console.log(e);
@@ -57,7 +58,9 @@ $("#agregar").click(function() {
                     </div>\n\
                     <input type="text" id="total_' + index + '" name="total[]" class="form-control currency-input" disabled>\n\
                  </div>\n\
-                 <button type="button" class="remove_btn btn btn-danger btn-xs" style="margin: auto;"><i class="fa fa-close"></i></button>\n\
+                 <div class="form-group col-md-1 input-info">\n\
+                    <button type="button" class="remove_btn btn btn-danger btn-xs" style="margin: auto;"><i class="fa fa-close"></i></button>\n\
+                </div>\n\
             </div>';
     $("#frmregent").append(add);
 
@@ -158,7 +161,7 @@ function onoff() {
     } else {
         $("#agregar").prop("disabled", true);
         $('.remove').remove();
-        $("#provid").val('');
+        // keep provider id even if other fields empty
         actualizarTotales();
     }
 }
@@ -198,40 +201,59 @@ function formatCurrency(input) {
 
 
 $("#btn-send").click(function() {
-    var obj = [];
-    var elems = $(".remove");
-    for (i = 1; i <= elems.length; i += 1) {
-        var prodid = $("#prodid_" + i).val();
-        var producto = $("#producto_" + i).val();
-        var cantidad = $("#cantidad_" + i).val();
-        var pu = $("#pu_" + i).val();
-        var subtotal = $("#total_" + i).val();
-
-
-        tmp = {
-            'producto': producto,
-            'prodid': prodid,
-            'cantidad': cantidad,
-            'precio': pu,
-            'subtotal': subtotal
-        };
-        obj.push(tmp);
+    console.log('btn-send clicked');
+    var provid_global = $('#provid').val();
+    console.log('valor provid_global', provid_global);
+    if (!provid_global) {
+        Swal.fire({
+            icon: 'warning',
+            title: 'Proveedor requerido',
+            text: 'Selecciona un proveedor antes de agregar.'
+        });
+        return;
     }
+    try {
+        var obj = [];
+        var elems = $(".remove");
+        console.log('elementos con clase remove', elems.length);
+        elems.each(function() {
+            var $row = $(this); 
+            var prodid = $row.find("input[name='prodid[]']").val();
+            var producto = $row.find("input[name='producto[]']").val();
+            var cantidad = $row.find("input[name='cantidad[]']").val();
+            var pu = $row.find("input[name='pu[]']").val();
+            var subtotal = $row.find("input[name='total[]']").val();
+            // strip currency formatting before sending
+            pu = pu.replace(/[^0-9.-]+/g, '');
+            subtotal = subtotal.replace(/[^0-9.-]+/g, '');
+            tmp = {
+                'producto': producto,
+                'prodid': prodid,
+                'cantidad': cantidad,
+                'precio': pu,
+                'subtotal': subtotal
+            };
+            obj.push(tmp);
+        });
 
-    var modo = $('#modo').val();
-    var provid = $('#provid').val();
-    var fecentra = $("#fecentra").val();
-    var requi = $('#requi').val();
-    var recibe = $('#recibe').val();
+        var modo = $('#modo').val();
+        var fecentra = $("#fecentra").val();
+        var requi = $('#requi').val();
+        var recibe = $('#recibe').val();
 
-    var postData = {
-        'modo': modo,
-        'provid': provid,
-        'fecentra': fecentra,
-        'requi': requi,
-        'recibe': recibe,
-        'productos': obj
-    };
+        var postData = {
+            'modo': modo,
+            'provid': provid_global,
+            'fecentra': fecentra,
+            'requi': requi,
+            'recibe': recibe,
+            'productos': obj
+        };
+        console.log('postData', postData);
+    } catch(err) {
+        console.error('error construyendo datos', err);
+        return;
+    }
 
     var formURL = "./almacen";
     $.ajax({

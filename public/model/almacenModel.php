@@ -5,8 +5,13 @@
 ****************************************************************************
 ** REFERENCIAS:                                                         ****
 ****************************************************************************
-** Creó:       Jesus Alberto Martinez Rodriguez						    ****
-** Fecha:		03/Abril/2024											****
+** Modificó:    Jazmín Martínez Rodríguez  						        ****
+** Fecha:       27/Febrero/2026											****
+** Descripción: Se agregó el método saveSalida para guardar las salidas ****
+**              de productos del almacén.							    ****
+****************************************************************************
+** Creó:        Jesus Alberto Martinez Rodriguez						****
+** Fecha:       03/Abril/2024											****
 ****************************************************************************
 */
 class almacenModel{
@@ -82,16 +87,15 @@ class almacenModel{
         $i=1;
         foreach($movimientos as $movimiento){
             $tipo = ($movimiento["tipo"] == 1) ? 'success' : 'danger';
-
             if($movimiento["tipo"] == 1){
                 $this->tMR.= <<< EOT
-                            <li>
-                                <div class="timeline-badge $tipo"></div>
-                                <a class="timeline-panel text-muted" href="javascript:void()">
-                                    <span>{$movimiento["fecha"]}</span>
-                                    <h6 class="mb-0"><strong>Entrada</strong> de requisición <strong class="text-$tipo">{$movimiento["origen"]}</strong>, del proovedor <strong class="text-$tipo">{$movimiento["destino"]}</strong> con <strong class="text-$tipo">{$movimiento["productos"]}</strong> productos y un total de <strong class="text-$tipo">{$movimiento["total"]}</strong>.</h6>
-                                </a>
-                            </li>
+                    <li>
+                        <div class="timeline-badge $tipo"></div>
+                        <a class="timeline-panel text-muted" href="javascript:void()">
+                            <span>{$movimiento["fecha"]}</span>
+                            <h6 class="mb-0"><strong>Entrada</strong> de requisición <strong class="text-$tipo">{$movimiento["origen"]}</strong>, del proovedor <strong class="text-$tipo">{$movimiento["destino"]}</strong> con <strong class="text-$tipo">{$movimiento["productos"]}</strong> productos y un total de <strong class="text-$tipo">{$movimiento["total"]}</strong>.</h6>
+                        </a>
+                    </li>
                 EOT;
             }else{
                 $destino ='';
@@ -101,14 +105,14 @@ class almacenModel{
                 }
     
                 $this->tMR.= <<< EOT
-                            <li>
-                                <div class="timeline-badge $tipo"></div>
-                                <a class="timeline-panel text-muted" href="javascript:void()">
-                                    <span>{$movimiento["fecha"]}</span>
-                                    <h6 class="mb-0"><strong>Salida</strong> de <strong class="text-$tipo">{$movimiento["productos"]}</strong> productos, Solicitado por <strong class="text-$tipo">{$movimiento["origen"]}</strong>, con destino 
-                                    <div class="bootstrap-badge row">{$badge}</div></h6>
-                                </a>
-                            </li>
+                    <li>
+                        <div class="timeline-badge $tipo"></div>
+                        <a class="timeline-panel text-muted" href="javascript:void()">
+                            <span>{$movimiento["fecha"]}</span>
+                            <h6 class="mb-0"><strong>Salida</strong> de <strong class="text-$tipo">{$movimiento["productos"]}</strong> productos, Solicitado por <strong class="text-$tipo">{$movimiento["origen"]}</strong>, con destino 
+                            <div class="bootstrap-badge row">{$badge}</div></h6>
+                        </a>
+                    </li>
                 EOT;
             }
             
@@ -174,7 +178,6 @@ class almacenModel{
     }
 
 	public function saveEntrada($provid,$fecentra,$requi,$recibe,$productos){
-
         $sql = "INSERT INTO ALENTART (Ent_Requic, Ent_Provee, Ent_FecEnt, Ent_Recibe, Ent_Produc, Ent_Cantid, Ent_PU, Ent_Total, Ent_FecAlt, Ent_FecMod, Ent_Estatu) values ";
         
         foreach ($productos as $index => $producto) {
@@ -184,10 +187,8 @@ class almacenModel{
                 $sql .= "('".$requi."',".$provid.",'".$fecentra."',".$recibe.",".$producto['prodid'].",".$producto['cantidad'].",".$producto['precio'].",".$producto['subtotal'].",now(),now(),1),";
             }else{
                 $sql .= "('".$requi."',".$provid.",'".$fecentra."',".$recibe.",".$producto['prodid'].",".$producto['cantidad'].",".$producto['precio'].",".$producto['subtotal'].",now(),now(),1);";
-            }
-                
+            }                
         }
-
         $result = $this->db->query($sql); 
 
         if(!$result) {
@@ -201,8 +202,6 @@ class almacenModel{
 
 	}
     public function saveSalida($solicitud,$solicita,$autoriza,$entrega,$fecsale,$destino,$productos){
-
-
         $sql = "INSERT INTO ALSALART (Sal_Solici, Sal_SolPer, Sal_Autori, Sal_Entreg, Sal_FecSal, Sal_Destin, Sal_Produc, Sal_Cantid, Sal_Coment, Sal_FecAlt, Sal_FecMod, Sal_Estatu) values ";
 
         foreach ($productos as $index => $producto) {
