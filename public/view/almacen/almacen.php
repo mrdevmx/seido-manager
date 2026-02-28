@@ -16,6 +16,15 @@
 </body>
 <script>
 $(document).ready(function() {
+    // custom invoice styles for modal
+    var invoiceStyles = '\
+        <style>\
+            #modalDetalle .table-invoice {width:100%; border-collapse:collapse;}\
+            #modalDetalle .table-invoice th, #modalDetalle .table-invoice td {padding:8px; border:1px solid #ddd;}\
+            #modalDetalle .table-invoice tbody tr:nth-child(odd){background:#f9f9f9;}\
+            #modalDetalle .invoice-header h5{margin-bottom:10px;}\
+        </style>';
+    $('head').append(invoiceStyles);
     $(document).on("click", ".remove .remove_btn", function() {
         // use closest to find the ancestor row even if wrapped by additional divs
         $(this).closest('.remove').remove();
@@ -30,6 +39,126 @@ $(document).ready(function() {
           //prov($(this));
      });*/
 
+});
+
+// handler for clicking on timeline movements (loads modal with detail)
+$(document).on('click', '.detalle-movimiento', function(){
+    var tipo = $(this).data('tipo');
+    var id   = $(this).data('id');
+    $.ajax({
+        url: './almacen',
+        type: 'POST',
+        dataType: 'json',
+        data: { action: 'detalle', tipo: tipo, id: id },
+        success: function(resp){
+            console.log('detalle respuesta:', resp);
+            var header = resp.header || {};
+            var html = '';
+            // support alternative key names in case backend returns other aliases
+            var requisicion = header.requisicion || header.Ent_Requic || header.Sal_Solici || '';
+            var proveedor   = header.proveedor || header.Cpo_NomCome || '';
+            var fecha       = header.fecha || header.Ent_FecEnt || header.Sal_FecSal || '';
+            var recibe      = header.recibe || header.recibido || '';
+            var solicitud   = header.solicitud || header.Sal_Solici || '';
+            var solicitante = header.solicitante || header.Sal_SolPer || '';
+            var autorizado  = header.autorizado || header.Sal_Autori || '';
+            var entregado   = header.entregado || header.Sal_Entreg || '';
+            var destino     = header.destino || header.Sal_Destin || '';
+            // formato de fecha largo en español
+            var formattedDate = '';
+            if(fecha){
+                try{
+                    var d = new Date(fecha);
+                    if(!isNaN(d)){
+                        formattedDate = d.toLocaleDateString('es-MX', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+                        formattedDate = formattedDate.charAt(0).toUpperCase() + formattedDate.slice(1);
+                    } else {
+                        formattedDate = fecha;
+                    }
+                }catch(e){ formattedDate = fecha; }
+            }
+
+            // build invoice-like header layout
+            html += '<div class="row mb-4" style="border-bottom:1px solid #ddd; padding-bottom:10px;">';
+            html += '<div class="col-md-6">';
+            html += '<h5>Movimiento</h5>';
+            if(tipo == 1){
+                html += '<p><strong>Requisición:</strong> '+requisicion+'</p>';
+                html += '<p><strong>Proveedor:</strong> '+proveedor+'</p>';
+                html += '<p><strong>Recibe:</strong> '+recibe+'</p>';
+            } else {
+                html += '<p><strong>Solicitud:</strong> '+solicitud+'</p>';
+                html += '<p><strong>Solicitante:</strong> '+solicitante+'</p>';
+                html += '<p><strong>Autorizó:</strong> '+autorizado+'</p>';
+                html += '<p><strong>Destino:</strong> '+destino+'</p>';
+            }
+            html += '</div>';
+            html += '<div class="col-md-6 text-right">';
+            html += '<h3 style="margin:0;">' + (tipo==1? 'ENTRADA':'SALIDA') + '</h3>';
+            html += '<p><strong>Fecha:</strong> '+(formattedDate||fecha)+'</p>';
+            // etiqueta de proveedor derecha removida según solicitud
+            html += '</div>';
+            html += '</div>';
+            html += '<table class="table-invoice mb-3"><thead><tr><th>Producto</th><th>Cantidad</th>';
+            if(tipo == 1){ html += '<th>P.U.</th><th>Total</th>'; }
+            else { html += '<th>Comentario</th>'; }
+            html += '</tr></thead><tbody>';
+            $.each(resp.productos||[],function(i,p){
+                html += '<tr>';
+                html += '<td>'+(p.producto||'')+'</td>';
+                html += '<td>'+(p.cantidad||'')+'</td>';
+                if(tipo == 1){
+                    var puVal = parseFloat(p.pu) || 0;
+                    var totVal = parseFloat(p.total);
+                    if(isNaN(totVal)){
+                        totVal = puVal * (parseFloat(p.cantidad) || 0);
+                    }
+                    var puFmt = puVal.toLocaleString('es-MX', {style: 'currency', currency: 'MXN'});
+                    var totFmt = totVal.toLocaleString('es-MX', {style: 'currency', currency: 'MXN'});
+                    html += '<td>' + puFmt + '</td><td>' + totFmt + '</td>';
+                } else {
+                    html += '<td>'+(p.comentario||'')+'</td>';
+                }
+                html += '</tr>';
+            });
+            html += '</tbody></table>';
+            // calculate totals for diseño de factura (solo se muestran en ENTRADA)
+            var subtotal = 0;
+            $.each(resp.productos||[], function(i,p){
+                var val = parseFloat(p.total || p.cantidad * p.pu || 0) || 0;
+                subtotal += val;
+            });
+            var iva = subtotal * 0.16;
+            var total = subtotal + iva;
+            // agregar sección de firma y totales únicamente para ENTRADAS
+            if(tipo == 1){
+                html += '<div class="row mt-4">';
+                html += '<div class="col-md-6">';
+                html += '<p><strong>Autorizó:</strong> </p>';
+                html += '</div>';
+                html += '<div class="col-md-6 text-right">';
+                html += '<table class="table table-sm" style="width:auto; float:right;">';
+                var fmtSubtotal = subtotal.toLocaleString('es-MX', {style: 'currency', currency: 'MXN'});
+                var fmtIva = iva.toLocaleString('es-MX', {style: 'currency', currency: 'MXN'});
+                var fmtTotal = total.toLocaleString('es-MX', {style: 'currency', currency: 'MXN'});
+                html += '<tr><th>Subtotal</th><td>' + fmtSubtotal + '</td></tr>';
+                html += '<tr><th>IVA (16%)</th><td>' + fmtIva + '</td></tr>';
+                html += '<tr><th>Total</th><td>' + fmtTotal + '</td></tr>';
+                html += '</table>';
+                html += '</div>';
+                html += '</div>';
+            } else {
+                // para SALIDAS no mostrar etiqueta 'Autorizó' ni totales; dejar espacio en blanco para balance visual
+                html += '<div class="row mt-4"><div class="col-12">&nbsp;</div></div>';
+            }
+            $('#detalleContent').html(html);
+            $('#modalDetalle').modal('show');
+        },
+        error: function(jqXHR, textStatus, err){
+            console.error('AJAX error detalle:', textStatus, err, jqXHR.responseText);
+            Swal.fire({icon:'error',title:'Error',text:'No se pudo obtener el detalle.'});
+        }
+    });
 });
 $("#agregar").click(function() {
     var cont = $(".remove").length;

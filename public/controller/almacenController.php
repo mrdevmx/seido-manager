@@ -8,6 +8,20 @@ $movResumen = new almacenModel();
 $almacen = new almacenModel();
 $andadores = new andadoresModel();
 
+// handle timeline detail ajax request
+if(isset($_POST['action']) && $_POST['action'] === 'detalle'){
+    $tipo = intval($_POST['tipo']);
+    $id   = $_POST['id'];
+    if($tipo === 1){
+        $resp = $almacen->getDetalleEntrada($id);
+    }else{
+        $resp = $almacen->getDetalleSalida($id);
+    }
+    header('Content-Type: application/json');
+    echo json_encode($resp);
+    exit;
+}
+
 if(isset($_POST["modo"])){
     if($_POST["modo"] == 1){
         $saveEntrada = new almacenModel();

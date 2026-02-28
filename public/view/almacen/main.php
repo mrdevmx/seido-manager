@@ -201,6 +201,24 @@
                 </div>
             </div>
         </div>
+        <!-- detail modal for timeline entries -->
+        <div class="modal fade" id="modalDetalle" data-backdrop="static">
+            <div class="modal-dialog modal-lg" role="document" style="max-width: 80%;">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Detalle del Movimiento</h5>
+                        <button type="button" class="close" data-dismiss="modal"><span>&times;</span></button>
+                    </div>
+                    <div class="modal-body" id="detalleContent">
+                        <!-- contenido cargado por AJAX -->
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-sm btn-danger light" data-dismiss="modal">Cerrar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- row -->
         <div class="row">
             <div class="col-xl-6 col-lg-12">
