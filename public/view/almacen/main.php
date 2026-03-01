@@ -191,67 +191,145 @@
                     <div class="card-body"> 
                         <div id="DZ_W_Todo1" class="widget-media dz-scroll" style="height:400px;">
                             <ul class="timeline">
+                                <?php if (isset($notifications)) { print $notifications; } else { ?>
                                 <li>
                                     <div class="timeline-panel">
-			    						<div class="media mr-2 media-warning">
-			    							<i class="la la-exclamation"></i>
-			    						</div>
+                                        <div class="media mr-2 media-info">
+                                            <i class="la la-info"></i>
+                                        </div>
                                         <div class="media-body">
-			    							<h5 class="mb-1">Dr sultads Send you Photo</h5>
-			    							<small class="d-block">29 July 2020 - 02:26 PM</small>
-			    						</div>
-			    						<div class="dropdown">
-			    							<button type="button" class="btn btn-warning light sharp" data-toggle="dropdown">
-			    								<svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
-			    							</button>
-			    							<div class="dropdown-menu">
-			    								<a class="dropdown-item" href="#">Edit</a>
-			    								<a class="dropdown-item" href="#">Delete</a>
-			    							</div>
-			    						</div>
-			    					</div>
+                                            <h5 class="mb-1">No hay notificaciones</h5>
+                                        </div>
+                                    </div>
                                 </li>
-                                <li>
-                                    <div class="timeline-panel">
-			    						<div class="media mr-2 media-danger">
-			    							<i class="la la-times-circle-o"></i>
-			    						</div>
-			    						<div class="media-body">
-			    							<h5 class="mb-1">Resport created successfully</h5>
-			    							<small class="d-block">29 July 2020 - 02:26 PM</small>
-			    						</div>
-			    						<div class="dropdown">
-			    							<button type="button" class="btn btn-danger light sharp" data-toggle="dropdown">
-			    								<svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
-			    							</button>
-			    							<div class="dropdown-menu">
-			    								<a class="dropdown-item" href="#">Edit</a>
-			    								<a class="dropdown-item" href="#">Delete</a>
-			    							</div>
-			    						</div>
-			    					</div>
-                                </li>
-			    				 <li>
-                                    <div class="timeline-panel">
-			    						<div class="media mr-2 media-info">
-			    							<i class="la la-flag-o"></i>
-			    						</div>
-                                        <div class="media-body">
-			    							<h5 class="mb-1">Dr sultads Send you Photo</h5>
-			    							<small class="d-block">29 July 2020 - 02:26 PM</small>
-			    						</div>
-			    						<div class="dropdown">
-			    							<button type="button" class="btn btn-info light sharp" data-toggle="dropdown">
-			    								<svg width="18px" height="18px" viewBox="0 0 24 24" version="1.1"><g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd"><rect x="0" y="0" width="24" height="24"/><circle fill="#000000" cx="5" cy="12" r="2"/><circle fill="#000000" cx="12" cy="12" r="2"/><circle fill="#000000" cx="19" cy="12" r="2"/></g></svg>
-			    							</button>
-			    							<div class="dropdown-menu">
-			    								<a class="dropdown-item" href="#">Edit</a>
-			    								<a class="dropdown-item" href="#">Delete</a>
-			    							</div>
-			    						</div>
-			    					</div>
-                                </li>
+                                <?php } ?>
                             </ul>
+
+                            <!-- Modal para ver detalle de notificaciones agrupadas -->
+                                                        <div class="modal fade" id="notifModal" tabindex="-1" role="dialog" aria-labelledby="notifModalLabel" aria-hidden="true">
+                                                            <div class="modal-dialog modal-md" role="document" style="max-width:900px;">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="notifModalLabel">Notificaciones</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                      <span aria-hidden="true">&times;</span>
+                                    </button>
+                                  </div>
+                                  <div class="modal-body">
+                                    <div id="notifModalBody">
+                                      <!-- Contenido generado por JS -->
+                                    </div>
+                                  </div>
+                                  <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
+                            <?php if (isset($notificationsData)) { ?>
+                            <script>
+                                window.notifications = <?php echo json_encode($notificationsData, JSON_HEX_TAG|JSON_HEX_AMP|JSON_HEX_APOS|JSON_HEX_QUOT); ?>;
+                            </script>
+                            <?php } else { ?>
+                            <script>window.notifications = {};</script>
+                            <?php } ?>
+
+                            <script>
+                            (function(){
+                                function escapeHtml(str){
+                                    if(str === null || str === undefined) return '';
+                                    return String(str)
+                                        .replace(/&/g, '&amp;')
+                                        .replace(/</g, '&lt;')
+                                        .replace(/>/g, '&gt;')
+                                        .replace(/"/g, '&quot;')
+                                        .replace(/'/g, '&#039;');
+                                }
+
+                                function renderTableForType(type, items){
+                                    if(!items || items.length === 0){
+                                        return '<div class="alert alert-info">No hay elementos para este tipo de notificación.</div>';
+                                    }
+                                    // Mapas de encabezados por tipo: [ [key,label], ... ] en el orden deseado
+                                    var headerMap = {
+                                        'low_stock': [ ['producto','Producto'], ['existencia','Existencia'], ['last_ent','Últ. entrada'], ['last_sal','Últ. salida'], ['ultima_entrada','Últ. entrada'], ['ultima_salida','Últ. salida'] ],
+                                        'zero_stock': [ ['producto','Producto'], ['existencia','Existencia'], ['last_ent','Últ. entrada'], ['last_sal','Últ. salida'], ['ultima_entrada','Últ. entrada'], ['ultima_salida','Últ. salida'] ],
+                                        'negative': [ ['producto','Producto'], ['existencia','Existencia'], ['last_ent','Últ. entrada'], ['last_sal','Últ. salida'] ],
+                                        'high_consumption': [ ['producto','Producto'], ['current_month_cnt','Salidas (mes actual)'], ['prev_month_cnt','Salidas (mes anterior)'], ['diferencia','Diferencia'] ],
+                                        'no_movement': [ ['producto','Producto'], ['ultima_ent','Últ. entrada'], ['ultima_sal','Últ. salida'] ],
+                                        'pending': null
+                                    };
+
+                                    var columns = [];
+                                    var labels = {};
+                                    if(headerMap[type]){
+                                        headerMap[type].forEach(function(pair){
+                                            var k = pair[0];
+                                            var l = pair[1];
+                                            // include if the key exists in items OR it's a computed column like 'diferencia'
+                                            if(items.length > 0 && ((k in items[0]) || k === 'diferencia')){
+                                                columns.push(k);
+                                                labels[k] = l;
+                                            }
+                                        });
+                                    }
+
+                                    // Si no se definió un mapa o quedó vacío, usar claves del primer item
+                                    if(columns.length === 0){
+                                        var ks = Object.keys(items[0]);
+                                        ks.forEach(function(k){ columns.push(k); labels[k] = k.replace(/_/g,' '); });
+                                    }
+
+                                    var html = '<div class="table-responsive"><table class="table table-sm"><thead><tr>';
+                                    columns.forEach(function(k){ html += '<th>'+escapeHtml(labels[k])+'</th>'; });
+                                    html += '</tr></thead><tbody>';
+                                    items.forEach(function(it){
+                                        html += '<tr>';
+                                        columns.forEach(function(k){
+                                            var v = '';
+                                            if(k === 'diferencia'){
+                                                var curr = Number(it.current_month_cnt || it.current_month || 0);
+                                                var prev = Number(it.prev_month_cnt || it.prev_month || 0);
+                                                v = curr - prev;
+                                            } else if(k in it){
+                                                v = it[k] !== null ? it[k] : '';
+                                            }
+                                            html += '<td>'+escapeHtml(v)+'</td>';
+                                        });
+                                        html += '</tr>';
+                                    });
+                                    html += '</tbody></table></div>';
+                                    return html;
+                                }
+
+                                document.addEventListener('click', function(e){
+                                    var target = e.target;
+                                    // find closest .view-notif button
+                                    while(target && target !== document){
+                                        if(target.classList && target.classList.contains('view-notif')) break;
+                                        target = target.parentNode;
+                                    }
+                                    if(!target || target === document) return;
+                                    var type = target.getAttribute('data-type');
+                                    var items = (window.notifications && window.notifications[type]) ? window.notifications[type] : [];
+                                    var titleMap = {
+                                        'negative':'Existencia negativa',
+                                        'pending':'Entradas pendientes',
+                                        'low_stock':'Baja existencia',
+                                        'high_consumption':'Aumento de consumo',
+                                        'no_movement':'Sin movimiento'
+                                    };
+                                    var label = titleMap[type] || 'Notificaciones';
+                                    var modalLabel = document.getElementById('notifModalLabel');
+                                    var modalBody = document.getElementById('notifModalBody');
+                                    if(modalLabel) modalLabel.textContent = label;
+                                    if(modalBody) modalBody.innerHTML = renderTableForType(type, items);
+                                    // allow bootstrap to open the modal via data-toggle attribute; if not, try to open via jQuery if available
+                                    // (we avoid depending on jQuery here)
+                                });
+                            })();
+                            </script>
                         </div>
                     </div>
                 </div>

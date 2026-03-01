@@ -29,6 +29,8 @@ class almacenModel{
     }
     public function getMovimientosResumen(){
         $set=$this->db->query("set lc_time_names = 'es_MX'");
+        // reset acumulador para evitar duplicados en llamadas repetidas
+        $this->movimientosResumen = array();
         $query=$this->db->query("(select 
                                      Ent_Requic as 'origen'
                                     ,Cpo_NomCome as 'destino'
@@ -66,20 +68,21 @@ class almacenModel{
                                 where Sal_Estatu = 1 
                                 group by Sal_Solici,Sal_SolPer,Sal_Destin,Sal_FecAlt)
                                 order by orden desc");
-        if ($query->num_rows > 0) {
+        if ($query && $query->num_rows > 0) {
             while($row=$query->fetch_assoc()){
                 $this->movimientosResumen[]=$row;
             }
         }else{
             return false;
         }
-        $this->db->close();
         return $this->movimientosResumen;
     }
 
     public function timelineMovimientosResumen(){
         $movimientos=$this->getMovimientosResumen();
         $i=1;
+        // reset timeline string
+        $this->tMR = '';
         foreach($movimientos as $movimiento){
             $tipo = ($movimiento["tipo"] == 1) ? 'success' : 'danger';
 
@@ -118,34 +121,178 @@ class almacenModel{
     }
 
     public function getKardex(){
-         $query=$this->db->query("select 
-                     Cri_Id
-                    ,Cri_Descrip as 'producto'
-                    ,Cun_NomClav
-                    ,ifnull((select sum(ifnull(Ent_Cantid,0)) as 'entradas' from ALENTART where Ent_Produc = Cri_Id group by Ent_Produc),0) as 'entradas'
-                    ,ifnull((select sum(ifnull(Sal_Cantid,0)) as 'salidas' from ALSALART where Sal_Produc = Cri_Id group by Sal_Produc),0) as 'salidas'
-                    ,ifnull((select sum(ifnull(Ent_Cantid,0)) as 'entradas' from ALENTART where Ent_Produc = Cri_Id group by Ent_Produc),0)
-                         -
-                    ifnull((select sum(ifnull(Sal_Cantid,0)) as 'salidas' from ALSALART where Sal_Produc = Cri_Id group by Sal_Produc),0) as 'existencia'
-                from ALCATART 
-                right join ALENTART on Ent_Produc = Cri_Id
-                left join ALSALART on Sal_Produc = Cri_Id
-                inner join ADCATUNI on Cri_Unidad = Cun_Id
-                group by Cri_Id
-                order by Cri_Id");
+            // reset kardex para evitar que llamadas repetidas acumulen filas
+            $this->kardex = array();
+            $query=$this->db->query("SELECT c.Cri_Id,
+                       c.Cri_Descrip AS producto,
+                       cun.Cun_NomClav,
+                       COALESCE(e.entradas,0) AS entradas,
+                       COALESCE(s.salidas,0) AS salidas,
+                       (COALESCE(e.entradas,0) - COALESCE(s.salidas,0)) AS existencia,
+                       (SELECT MAX(Ent_FecMod) FROM ALENTART WHERE Ent_Produc = c.Cri_Id AND Ent_Estatu = 1) AS last_ent,
+                       (SELECT MAX(Sal_FecAlt) FROM ALSALART WHERE Sal_Produc = c.Cri_Id AND Sal_Estatu = 1) AS last_sal
+                FROM ALCATART c
+                LEFT JOIN ADCATUNI cun ON c.Cri_Unidad = cun.Cun_Id
+                LEFT JOIN (
+                    SELECT Ent_Produc, SUM(Ent_Cantid) AS entradas
+                    FROM ALENTART
+                    WHERE Ent_Estatu = 1
+                    GROUP BY Ent_Produc
+                ) e ON e.Ent_Produc = c.Cri_Id
+                LEFT JOIN (
+                    SELECT Sal_Produc, SUM(Sal_Cantid) AS salidas
+                    FROM ALSALART
+                    WHERE Sal_Estatu = 1
+                    GROUP BY Sal_Produc
+                ) s ON s.Sal_Produc = c.Cri_Id
+                ORDER BY c.Cri_Id");
 
-        if ($query->num_rows > 0) {
+        if ($query && $query->num_rows > 0) {
             while($row=$query->fetch_assoc()){
                 $this->kardex[]=$row;
             }
-        }else{
-            return false;
         }
-        $this->db->close();
         return $this->kardex;
     }
 
+    /**
+     * Obtener productos con existencia menor o igual al umbral
+     * Retorna un array asociativo: [ ['Cri_Id'=>..., 'producto'=>..., 'entradas'=>..., 'salidas'=>..., 'existencia'=>...], ... ]
+     */
+    public function getLowStock($threshold = 5){
+        $kardex = $this->getKardex();
+        $low = array();
+        foreach($kardex as $row){
+            $exist = isset($row['existencia']) ? intval($row['existencia']) : 0;
+            if ($exist <= intval($threshold)){
+                $low[] = $row;
+            }
+        }
+        return $low;
+    }
+
+    /**
+     * Productos con existencia negativa (inconsistencia de datos)
+     */
+    public function getNegativeStock(){
+        $kardex = $this->getKardex();
+        $neg = array();
+        foreach($kardex as $row){
+            $exist = isset($row['existencia']) ? intval($row['existencia']) : 0;
+            if ($exist < 0){
+                $neg[] = $row;
+            }
+        }
+        return $neg;
+    }
+
+    /**
+     * Productos con existencia exactamente 0
+     */
+    public function getZeroStock($limit = 100){
+        $kardex = $this->getKardex();
+        $zero = array();
+        foreach($kardex as $row){
+            $exist = isset($row['existencia']) ? intval($row['existencia']) : 0;
+            if ($exist === 0){
+                $zero[] = $row;
+            }
+        }
+        return $zero;
+    }
+
+    /**
+     * Entradas pendientes (Ent_Estatu != 1)
+     */
+    public function getPendingEntries($limit = 10){
+        $sql = "SELECT Ent_Requic, Ent_Provee, Cpo_NomCome AS proveedor, Ent_FecEnt, SUM(Ent_Cantid) AS total_items, Ent_Estatu
+                FROM ALENTART
+                LEFT JOIN ADCATPRO ON Ent_Provee = Cpo_Id
+                WHERE Ent_Estatu <> 1
+                GROUP BY Ent_Requic, Ent_Provee, Ent_FecEnt, Ent_Estatu
+                ORDER BY Ent_FecAlt DESC
+                LIMIT " . intval($limit);
+
+        $result = $this->db->query($sql);
+        $pend = array();
+        if ($result && $result->num_rows > 0) {
+            while($row = $result->fetch_assoc()){
+                $pend[] = $row;
+            }
+        }
+        return $pend;
+    }
+
+    /**
+     * Productos sin movimiento en los ultimos N dias
+     */
+    public function getNoMovement($days = 30, $limit = 20){
+        // Calcula la última entrada y última salida por producto, y filtra aquellos cuya última actividad
+        // (entrada o salida) es anterior a NOW() - INTERVAL $days DAY.
+                $sql = "SELECT c.Cri_Id, c.Cri_Descrip AS producto,
+                                             e.ultima_ent, s.ultima_sal,
+                                             e.ultima_ent AS last_activity
+                                FROM ALCATART c
+                                LEFT JOIN (SELECT Ent_Produc, MAX(Ent_FecMod) AS ultima_ent FROM ALENTART WHERE Ent_Estatu = 1 GROUP BY Ent_Produc) e ON e.Ent_Produc = c.Cri_Id
+                                LEFT JOIN (SELECT Sal_Produc, MAX(Sal_FecAlt) AS ultima_sal FROM ALSALART WHERE Sal_Estatu = 1 GROUP BY Sal_Produc) s ON s.Sal_Produc = c.Cri_Id
+                                WHERE e.ultima_ent IS NOT NULL
+                                    AND UNIX_TIMESTAMP(e.ultima_ent) < UNIX_TIMESTAMP(DATE_SUB(NOW(), INTERVAL " . intval($days) . " DAY))
+                                ORDER BY e.ultima_ent ASC
+                                LIMIT " . intval($limit);
+
+        $result = $this->db->query($sql);
+        $nomv = array();
+        if ($result && $result->num_rows > 0) {
+            while($row = $result->fetch_assoc()){
+                $nomv[] = $row;
+            }
+        }
+        return $nomv;
+    }
+
+    /**
+     * Productos con aumento de consumo: compara salidas del mes actual vs mes anterior.
+     * Devuelve productos donde las salidas del mes actual > salidas del mes anterior.
+     * @param int $limit max rows to return
+     */
+    public function getHighConsumption($limit = 200){
+        $sql = "SELECT p.Cri_Id, p.Cri_Descrip AS producto,
+                       COALESCE(curr.cnt,0) AS current_month_cnt,
+                       COALESCE(prev.cnt,0) AS prev_month_cnt
+                FROM ALCATART p
+                LEFT JOIN (
+                    SELECT Sal_Produc, SUM(Sal_Cantid) AS cnt
+                    FROM ALSALART
+                    WHERE Sal_Estatu = 1
+                      AND YEAR(Sal_FecAlt) = YEAR(NOW())
+                      AND MONTH(Sal_FecAlt) = MONTH(NOW())
+                    GROUP BY Sal_Produc
+                ) curr ON curr.Sal_Produc = p.Cri_Id
+                LEFT JOIN (
+                    SELECT Sal_Produc, SUM(Sal_Cantid) AS cnt
+                    FROM ALSALART
+                    WHERE Sal_Estatu = 1
+                      AND YEAR(Sal_FecAlt) = YEAR(DATE_SUB(NOW(), INTERVAL 1 MONTH))
+                      AND MONTH(Sal_FecAlt) = MONTH(DATE_SUB(NOW(), INTERVAL 1 MONTH))
+                    GROUP BY Sal_Produc
+                ) prev ON prev.Sal_Produc = p.Cri_Id
+                WHERE COALESCE(curr.cnt,0) > COALESCE(prev.cnt,0)
+                ORDER BY (COALESCE(curr.cnt,0) - COALESCE(prev.cnt,0)) DESC
+                LIMIT " . intval($limit);
+
+        $result = $this->db->query($sql);
+        $high = array();
+        if ($result && $result->num_rows > 0) {
+            while($row = $result->fetch_assoc()){
+                $high[] = $row;
+            }
+        }
+        return $high;
+    }
+
     public function getKardexTable(){
+        // reset table HTML buffer
+        $this->tableKardex = '';
         $kardexs=$this->getKardex();
 
         foreach($kardexs as $kardex){
