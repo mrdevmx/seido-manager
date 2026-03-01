@@ -15,15 +15,55 @@
     <?php include './view/template/scripts.php'?>
 </body>
 <script>
-$(document).ready(function() {
-    // custom invoice styles for modal
-    var invoiceStyles = '\
+// custom invoice styles for modal - declare at global scope for print functionality
+var invoiceStyles = '\
         <style>\
-            #modalDetalle .table-invoice {width:100%; border-collapse:collapse;}\
-            #modalDetalle .table-invoice th, #modalDetalle .table-invoice td {padding:8px; border:1px solid #ddd;}\
-            #modalDetalle .table-invoice tbody tr:nth-child(odd){background:#f9f9f9;}\
-            #modalDetalle .invoice-header h5{margin-bottom:10px;}\
+            :root { --primary-color: #002060; --accent-color: #0047FF; --text-main: #000000; --text-muted: #333333; --bg-page: transparent; --doc-bg: transparent; --table-header-bg: #002060; --table-row-odd: #E0E2E5; --table-row-even: #D5D8DC; }\
+            #modalDetalle .modal-body { padding: 0; background-color: var(--doc-bg); border-radius: 4px; overflow: hidden; }\
+            #modalDetalle .invoice-container {width: 100%; min-height: 279.4mm; background-color: var(--doc-bg); position: relative; display: flex; flex-direction: column; padding: 40px 20px; font-family: \\\'Montserrat\\\', sans-serif;}\
+            #modalDetalle .invoice-header {display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 2px; width: 100%;}\
+            #modalDetalle .header-left {padding: 40px 0 0 40px; width: 45%; display: block;}\
+            #modalDetalle .logo {height: 70px; margin-bottom: 30px; display: flex; align-items: center; gap: 15px;}\
+            #modalDetalle .logo-img {max-width: 280px; max-height: 100%; object-fit: contain;}\
+            #modalDetalle .bill-to {display: block;}\
+            #modalDetalle .bill-to h3 {font-size: 12px; color: var(--text-main); margin-bottom: 8px; font-weight: 700;}\
+            #modalDetalle .bill-to h2 {font-size: 18px; font-weight: 800; color: var(--text-main); margin-bottom: 8px; letter-spacing: 0.5px;}\
+            #modalDetalle .bill-to p {font-size: 13px; line-height: 1.5; color: var(--text-main); margin-bottom: 2px;}\
+            #modalDetalle .header-right {width: 55%; display: flex; justify-content: flex-end;}\
+            #modalDetalle .dark-box {color: #000000; padding: 40px; width: 100%; min-height: max-content; padding-bottom: 50px; text-align: right;}\
+            #modalDetalle .dark-box h1 {font-weight: 800; font-size: 42px; letter-spacing: 2px; margin-bottom: 30px; height: 70px; display: flex; align-items: center; justify-content: flex-end; text-transform: uppercase;}\
+            #modalDetalle .dark-box-details {display: flex; flex-direction: column; align-items: flex-end; gap: 8px; font-size: 13px;}\
+            #modalDetalle .detail-row {display: flex; justify-content: flex-end; gap: 5px; white-space: nowrap; width: 100%;}\
+            #modalDetalle .detail-label {font-weight: 600;}\
+            #modalDetalle .detail-value {font-weight: 600; text-align: right;}\
+            #modalDetalle main {padding: 0 40px; flex-grow: 1; display: flex; flex-direction: column;}\
+            #modalDetalle .invoice-table {width: 100%; border-collapse: collapse; margin-bottom: 40px;}\
+            #modalDetalle .invoice-table thead {background-color: var(--table-header-bg); color: white;}\
+            #modalDetalle .invoice-table th {padding: 12px 15px; font-size: 10px; text-align: left; font-weight: 700; text-transform: uppercase; letter-spacing: 0.5px;}\
+            #modalDetalle .invoice-table th.col-sl {width: 50px; text-align: center;}\
+            #modalDetalle .invoice-table th.col-qty, #modalDetalle .invoice-table th.col-price, #modalDetalle .invoice-table th.col-total {text-align: center;}\
+            #modalDetalle .invoice-table tbody tr {background-color: var(--table-row-odd); border-bottom: 2px solid var(--doc-bg);}\
+            #modalDetalle .invoice-table tbody tr:nth-child(even) {background-color: var(--table-row-even);}\
+            #modalDetalle .invoice-table td {padding: 16px 15px; font-size: 11px; color: var(--text-main);}\
+            #modalDetalle .invoice-table td strong {font-weight: 700;}\
+            #modalDetalle .invoice-table td.col-sl, #modalDetalle .invoice-table td.col-qty, #modalDetalle .invoice-table td.col-price, #modalDetalle .invoice-table td.col-total {text-align: center; font-weight: 600;}\
+            #modalDetalle .invoice-summary {display: flex; justify-content: space-between; margin-top: auto; padding-bottom: 30px; width: 100%;}\
+            #modalDetalle .summary-left {width: 40%;}\
+            #modalDetalle .auth-title {font-size: 12px; font-weight: 800; margin-bottom: 20px; text-transform: uppercase;}\
+            #modalDetalle .signature-line {border-bottom: 1px solid var(--text-main); width: 100%; margin-top: 50px;}\
+            #modalDetalle .summary-right {width: 45%; display: flex; flex-direction: column; align-items: flex-end;}\
+            #modalDetalle .totals-table {width: 100%; border-collapse: collapse;}\
+            #modalDetalle .totals-table td {padding: 10px 0; font-size: 12px; font-weight: 700;}\
+            #modalDetalle .totals-table td:last-child {text-align: right;}\
+            #modalDetalle .totals-table tr {border-bottom: 0px solid #D5D8DC;}\
+            #modalDetalle .totals-table tr:last-child {border-bottom: none;}\
+            #modalDetalle .grand-total-box {width: 100%; border-top: 2px solid var(--text-main); margin-top: 5px;}\
+            #modalDetalle .totals-table tr.grand-total td {font-size: 15px; font-weight: 800; padding-top: 15px; padding-bottom: 15px;}\
+            #modalDetalle .invoice-footer {padding: 10px 40px 40px 40px; margin-top: auto;}\
+            #modalDetalle .footer-line {border-top: 2px solid #D5D8DC;}\
         </style>';
+
+$(document).ready(function() {
     $('head').append(invoiceStyles);
     $(document).on("click", ".remove .remove_btn", function() {
         // use closest to find the ancestor row even if wrapped by additional divs
@@ -79,50 +119,92 @@ $(document).on('click', '.detalle-movimiento', function(){
             }
 
             // build invoice-like header layout
-            html += '<div class="row mb-4" style="border-bottom:1px solid #ddd; padding-bottom:10px;">';
-            html += '<div class="col-md-6">';
-            html += '<h5>Movimiento</h5>';
+            html += '<div class="invoice-container">';
+            html += '  <header class="invoice-header">';
+            html += '    <div class="header-left">';
+            html += '      <div class="logo">';
+            html += '         <img src="./public/src/images/logotipo-arctec-horizontal.png" alt="Construcciones Arctec Logo" class="logo-img">';
+            html += '      </div>';
+            html += '      <div class="bill-to">';
             if(tipo == 1){
-                html += '<p><strong>Requisición:</strong> '+requisicion+'</p>';
-                html += '<p><strong>Proveedor:</strong> '+proveedor+'</p>';
-                html += '<p><strong>Recibe:</strong> '+recibe+'</p>';
+                html += '        <h3>PROVEEDOR:</h3>';
+                html += '        <h2>'+proveedor+'</h2>';
+                html += '        <p><strong>Recibe:</strong> '+recibe+'</p>';
             } else {
-                html += '<p><strong>Solicitud:</strong> '+solicitud+'</p>';
-                html += '<p><strong>Solicitante:</strong> '+solicitante+'</p>';
-                html += '<p><strong>Autorizó:</strong> '+autorizado+'</p>';
-                html += '<p><strong>Destino:</strong> '+destino+'</p>';
+                html += '        <h3>SOLICITANTE:</h3>';
+                html += '        <h2>'+solicitante+'</h2>';
+                html += '        <p><strong>Autorizó:</strong> '+autorizado+'</p>';
+                html += '        <p><strong>Destino:</strong> '+destino+'</p>';
             }
-            html += '</div>';
-            html += '<div class="col-md-6 text-right">';
-            html += '<h3 style="margin:0;">' + (tipo==1? 'ENTRADA':'SALIDA') + '</h3>';
-            html += '<p><strong>Fecha:</strong> '+(formattedDate||fecha)+'</p>';
-            // etiqueta de proveedor derecha removida según solicitud
-            html += '</div>';
-            html += '</div>';
-            html += '<table class="table-invoice mb-3"><thead><tr><th>Producto</th><th>Cantidad</th>';
-            if(tipo == 1){ html += '<th>P.U.</th><th>Total</th>'; }
-            else { html += '<th>Comentario</th>'; }
-            html += '</tr></thead><tbody>';
+            html += '      </div>';
+            html += '    </div>';
+            html += '    <div class="header-right">';
+            html += '      <div class="dark-box">';
+            html += '        <h1>' + (tipo==1? 'ENTRADA':'SALIDA') + '</h1>';
+            html += '        <div class="dark-box-details">';
+            html += '          <div class="detail-row">';
+            html += '            <span class="detail-label">Fecha:</span>';
+            html += '            <span class="detail-value text-right">'+(formattedDate||fecha)+'</span>';
+            html += '          </div>';
+            if(tipo == 1){
+                html += '          <div class="detail-row">';
+                html += '            <span class="detail-label">Documento:</span>';
+                html += '            <span class="detail-value text-right">Entrada de Almacén</span>';
+                html += '          </div>';
+                html += '          <div class="detail-row">';
+                html += '            <span class="detail-label">Requisición: #</span>';
+                html += '            <span class="detail-value">'+requisicion+'</span>';
+                html += '          </div>';
+            } else {
+                html += '          <div class="detail-row">';
+                html += '            <span class="detail-label">Solicitud: #</span>';
+                html += '            <span class="detail-value">'+solicitud+'</span>';
+                html += '          </div>';
+            }
+            html += '        </div>';
+            html += '      </div>';
+            html += '    </div>';
+            html += '  </header>';
+
+            // MAIN TABLE
+            html += '  <main>';
+            html += '    <table class="invoice-table">';
+            html += '      <thead>';
+            html += '        <tr>';
+            html += '          <th class="col-sl">N.º</th>';
+            html += '          <th class="col-desc">PRODUCTO</th>';
+            html += '          <th class="col-qty">CANTIDAD</th>';
+            if(tipo == 1){
+                html += '          <th class="col-price">P.U.</th>';
+                html += '          <th class="col-total">TOTAL</th>';
+            } else {
+                html += '          <th>COMENTARIO</th>';
+            }
+            html += '        </tr>';
+            html += '      </thead>';
+            html += '      <tbody>';
             $.each(resp.productos||[],function(i,p){
-                html += '<tr>';
-                html += '<td>'+(p.producto||'')+'</td>';
-                html += '<td>'+(p.cantidad||'')+'</td>';
+                html += '        <tr>';
+                html += '          <td class="col-sl">'+(i+1)+'</td>';
+                html += '          <td class="col-desc"><strong>'+(p.producto||'')+'</strong></td>';
+                html += '          <td class="col-qty">'+(p.cantidad||'')+'</td>';
                 if(tipo == 1){
                     var puVal = parseFloat(p.pu) || 0;
                     var totVal = parseFloat(p.total);
-                    if(isNaN(totVal)){
-                        totVal = puVal * (parseFloat(p.cantidad) || 0);
-                    }
+                    if(isNaN(totVal)){ totVal = puVal * (parseFloat(p.cantidad) || 0); }
                     var puFmt = puVal.toLocaleString('es-MX', {style: 'currency', currency: 'MXN'});
                     var totFmt = totVal.toLocaleString('es-MX', {style: 'currency', currency: 'MXN'});
-                    html += '<td>' + puFmt + '</td><td>' + totFmt + '</td>';
+                    html += '          <td class="col-price">' + puFmt + '</td>';
+                    html += '          <td class="col-total">' + totFmt + '</td>';
                 } else {
-                    html += '<td>'+(p.comentario||'')+'</td>';
+                    html += '          <td>'+(p.comentario||'')+'</td>';
                 }
-                html += '</tr>';
+                html += '        </tr>';
             });
-            html += '</tbody></table>';
-            // calculate totals for diseño de factura (solo se muestran en ENTRADA)
+            html += '      </tbody>';
+            html += '    </table>';
+
+            // calculate totals for diseño de factura
             var subtotal = 0;
             $.each(resp.productos||[], function(i,p){
                 var val = parseFloat(p.total || p.cantidad * p.pu || 0) || 0;
@@ -130,27 +212,40 @@ $(document).on('click', '.detalle-movimiento', function(){
             });
             var iva = subtotal * 0.16;
             var total = subtotal + iva;
-            // agregar sección de firma y totales únicamente para ENTRADAS
+
+            html += '    <!-- SUMMARY SECTION -->';
+            html += '    <div class="invoice-summary">';
+            html += '      <div class="summary-left">';
             if(tipo == 1){
-                html += '<div class="row mt-4">';
-                html += '<div class="col-md-6">';
-                html += '<p><strong>Autorizó:</strong> </p>';
-                html += '</div>';
-                html += '<div class="col-md-6 text-right">';
-                html += '<table class="table table-sm" style="width:auto; float:right;">';
+                html += '        <h3 class="auth-title">AUTORIZÓ:</h3>';
+                html += '        <div class="signature-line"></div>';
+            } else {
+                html += '        <h3 class="auth-title">ENTREGÓ: '+entregado+'</h3>';
+                html += '        <div class="signature-line"></div>';
+            }
+            html += '      </div>';
+            html += '      <div class="summary-right">';
+            if(tipo == 1){
                 var fmtSubtotal = subtotal.toLocaleString('es-MX', {style: 'currency', currency: 'MXN'});
                 var fmtIva = iva.toLocaleString('es-MX', {style: 'currency', currency: 'MXN'});
                 var fmtTotal = total.toLocaleString('es-MX', {style: 'currency', currency: 'MXN'});
-                html += '<tr><th>Subtotal</th><td>' + fmtSubtotal + '</td></tr>';
-                html += '<tr><th>IVA (16%)</th><td>' + fmtIva + '</td></tr>';
-                html += '<tr><th>Total</th><td>' + fmtTotal + '</td></tr>';
-                html += '</table>';
-                html += '</div>';
-                html += '</div>';
-            } else {
-                // para SALIDAS no mostrar etiqueta 'Autorizó' ni totales; dejar espacio en blanco para balance visual
-                html += '<div class="row mt-4"><div class="col-12">&nbsp;</div></div>';
+                html += '        <table class="totals-table">';
+                html += '          <tr><td>SUB TOTAL</td><td>' + fmtSubtotal + '</td></tr>';
+                html += '          <tr><td>IVA (16%)</td><td>' + fmtIva + '</td></tr>';
+                html += '        </table>';
+                html += '        <div class="grand-total-box">';
+                html += '          <table class="totals-table">';
+                html += '            <tr class="grand-total"><td>TOTAL</td><td>' + fmtTotal + '</td></tr>';
+                html += '          </table>';
+                html += '        </div>';
             }
+            html += '      </div>';
+            html += '    </div>';
+            html += '  </main>';
+            html += '  <footer class="invoice-footer">';
+            html += '    <div class="footer-line"></div>';
+            html += '  </footer>';
+            html += '</div>';
             $('#detalleContent').html(html);
             $('#modalDetalle').modal('show');
         },
@@ -570,6 +665,39 @@ $("#btn-send-salida").click(function() {
             })
         }
     });
+});
+
+// imprimir solo el contenido del modalDetalle
+$(document).on('click', '#btn-print-detalle', function(){
+    var $content = $('#detalleContent').clone();
+    // quitar posibles botones o elementos no deseados
+    $content.find('#btn-print-detalle').remove();
+    $content.find('.btn').remove();
+
+    var headHtml = '<title>Detalle del Movimiento</title>';
+    // copiar hojas de estilo actuales
+    $('link[rel="stylesheet"]').each(function(){
+        var href = $(this).attr('href');
+        if(href) headHtml += '<link rel="stylesheet" href="'+href+'">';
+    });
+    // estilos mínimos para la tabla de factura y diseño general
+    // Modifico para aplicar un CSS adecuado para que se imprima correctamente la nueva ventana
+    var printStyles = invoiceStyles.replace(/#modalDetalle /g, "");
+    printStyles += "<style>html { margin: 0; padding: 0; } @page { size: letter; margin: 0 !important; } body { padding: 0 !important; background-color: white !important; margin: 0; width: 215.9mm; height: 279.4mm; } .invoice-container { width: 215.9mm; height: 279.4mm !important; box-shadow: none; background-color: var(--doc-bg) !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; page-break-after: avoid; } main { flex: 1; }</style>";
+    headHtml += printStyles;
+
+    var printWindow = window.open("", "_blank");
+    if(printWindow){
+        printWindow.document.write("<!doctype html><html><head>"+headHtml+"</head><body>"+$content.html()+"</body></html>");
+        printWindow.document.close();
+        printWindow.onload = function() {
+            printWindow.focus();
+            printWindow.print();
+            setTimeout(function(){ printWindow.close(); }, 500);
+        };
+    } else {
+        alert("Por favor habilita las ventanas emergentes (pop-ups) para imprimir el documento.");
+    }
 });
 </script>
 

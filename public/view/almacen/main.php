@@ -213,6 +213,7 @@
                         <!-- contenido cargado por AJAX -->
                     </div>
                     <div class="modal-footer">
+                        <button type="button" id="btn-print-detalle" class="btn btn-sm btn-secondary">Imprimir</button>
                         <button type="button" class="btn btn-sm btn-danger light" data-dismiss="modal">Cerrar</button>
                     </div>
                 </div>
